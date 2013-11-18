@@ -1,18 +1,15 @@
 package com.ericrgon.nearbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Session;
 import com.ericrgon.nearbox.rest.OutboxMailService;
-
-import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.Views;
@@ -53,18 +50,9 @@ public class LoginActivity extends FragmentActivity{
         mailService.authenticate(username.getText().toString(),password.getText().toString(),new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
-                mailService.getMail(OutboxMailService.Status.UNSORTED,session.getSid(),new Callback<List<Letter>>() {
-                    @Override
-                    public void success(List<Letter> letters, Response response) {
-                        Log.d("DEB",letters.toString());
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        int i = 0;
-                    }
-                });
-
+                Intent letterList = new Intent(LoginActivity.this,LetterListActivity.class);
+                letterList.putExtra(LetterListActivity.SESSION,session.getSid());
+                startActivity(letterList);
             }
 
             @Override

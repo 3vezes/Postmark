@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LetterListActivity"/>
         <activity
             android:name="com.ericrgon.nearbox.LetterDetailActivity"
             android:label="@string/title_letter_detail"

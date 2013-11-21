@@ -50,7 +50,7 @@ public class LoginActivity extends FragmentActivity{
         mailService.authenticate(username.getText().toString(),password.getText().toString(),new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
-                Intent letterList = new Intent(LoginActivity.this,LetterListActivity.class);
+                Intent letterList = new Intent(LoginActivity.this,HomeActivity.class);
                 letterList.putExtra(LetterListActivity.SESSION,session.getSid());
                 startActivity(letterList);
             }

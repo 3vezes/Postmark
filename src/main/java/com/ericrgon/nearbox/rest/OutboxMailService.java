@@ -2,6 +2,7 @@ package com.ericrgon.nearbox.rest;
 
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Session;
+import com.ericrgon.nearbox.model.Stack;
 
 import java.util.List;
 
@@ -34,6 +35,9 @@ public interface OutboxMailService {
     }
 
     @GET("/v0/mail")
-    public void getMail(@Query("status") Status status,@Query("sid") String sessionId, Callback<List<Letter>> mailCallback);
+    public void getMail(@Query("status") Status status, Callback<List<Letter>> callback);
+
+    @GET("/v0/stacks")
+    public void getFolders(Callback<List<Stack>> callback);
 
 }

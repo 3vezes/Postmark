@@ -3,21 +3,18 @@ package com.ericrgon.nearbox;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.ericrgon.nearbox.model.Letter;
 
-public class HomeActivity extends FragmentActivity implements LetterListFragment.Callbacks{
+public class HomeActivity extends BaseFragmentActivity implements LetterListFragment.Callbacks{
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-    private ListView drawerList;
+    private DrawerFragment drawerFragment;
 
 
     @Override
@@ -26,11 +23,8 @@ public class HomeActivity extends FragmentActivity implements LetterListFragment
         setContentView(R.layout.activity_home);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, getResources().getStringArray(R.array.planets_array)));
 
         // Nav drawer behaviour
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,6 +51,9 @@ public class HomeActivity extends FragmentActivity implements LetterListFragment
         drawerLayout.setDrawerListener(drawerToggle);
 
         Fragment fragment = new LetterListFragment();
+
+        drawerFragment = new DrawerFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer,drawerFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,fragment).commit();
     }
 

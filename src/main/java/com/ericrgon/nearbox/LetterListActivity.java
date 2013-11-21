@@ -2,7 +2,6 @@ package com.ericrgon.nearbox;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 
 import com.ericrgon.nearbox.adapter.MailAdapter;
@@ -12,7 +11,6 @@ import com.ericrgon.nearbox.rest.OutboxMailService;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -33,7 +31,7 @@ import retrofit.client.Response;
  * {@link LetterListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class LetterListActivity extends FragmentActivity
+public class LetterListActivity extends BaseFragmentActivity
         implements LetterListFragment.Callbacks {
 
     public static final String SESSION = "session";
@@ -66,17 +64,10 @@ public class LetterListActivity extends FragmentActivity
 
         listFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.letter_list);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setServer(OutboxMailService.URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-
-
-        OutboxMailService mailService = restAdapter.create(OutboxMailService.class);
-        mailService.getMail(OutboxMailService.Status.UNSORTED,getIntent().getExtras().getString(SESSION),new Callback<List<Letter>>() {
+        getMailService().getMail(OutboxMailService.Status.UNSORTED, new Callback<List<Letter>>() {
             @Override
             public void success(List<Letter> letters, Response response) {
-                listFragment.setListAdapter(new MailAdapter(LetterListActivity.this,letters));
+                listFragment.setListAdapter(new MailAdapter(LetterListActivity.this, letters));
             }
 
             @Override
@@ -84,9 +75,6 @@ public class LetterListActivity extends FragmentActivity
 
             }
         });
-
-
-
     }
 
     /**

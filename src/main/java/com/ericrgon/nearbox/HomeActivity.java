@@ -50,7 +50,7 @@ public class HomeActivity extends BaseFragmentActivity implements LetterListFrag
         };
         drawerLayout.setDrawerListener(drawerToggle);
 
-        Fragment fragment = new LetterListFragment();
+        Fragment fragment = new LetterGridFragment();
 
         drawerFragment = new DrawerFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.left_drawer,drawerFragment).commit();

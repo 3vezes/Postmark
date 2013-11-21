@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.ericrgon.nearbox.model.Letter;
@@ -45,6 +46,9 @@ public class MailAdapter extends BaseAdapter {
         ImageView view = (ImageView) convertView;
         if (view == null) {
             view = new ImageView(context);
+            view.setLayoutParams(new GridView.LayoutParams(120, 120));
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setPadding(8, 8, 8, 8);
         }
         String url = getItem(position).getPages().get(0).getImages().getImages().get(50);
 

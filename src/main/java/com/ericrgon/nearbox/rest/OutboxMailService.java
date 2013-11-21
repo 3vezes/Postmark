@@ -37,6 +37,9 @@ public interface OutboxMailService {
     @GET("/v0/mail")
     public void getMail(@Query("status") Status status, Callback<List<Letter>> callback);
 
+    @GET("/v0/mail")
+    public void getStack(@Query("stack") String stackName, Callback<List<Letter>> callback);
+
     @GET("/v0/stacks")
     public void getFolders(Callback<List<Stack>> callback);
 

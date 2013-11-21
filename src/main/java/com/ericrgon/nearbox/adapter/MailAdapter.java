@@ -45,8 +45,10 @@ public class MailAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView view = (ImageView) convertView;
         if (view == null) {
+            float density = context.getResources().getDisplayMetrics().density;
+
             view = new ImageView(context);
-            view.setLayoutParams(new GridView.LayoutParams(120, 120));
+            view.setLayoutParams(new GridView.LayoutParams((int) (100 * density),(int) (100 * density)));
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setPadding(8, 8, 8, 8);
         }

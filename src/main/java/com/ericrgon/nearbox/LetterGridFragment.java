@@ -1,6 +1,7 @@
 package com.ericrgon.nearbox;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,11 +22,13 @@ import retrofit.client.Response;
 public class LetterGridFragment extends Fragment{
 
     private OutboxMailService mailService;
+    private Context context;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mailService = ((BaseFragmentActivity) activity).getMailService();
+        context = activity;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class LetterGridFragment extends Fragment{
         mailService.getMail(OutboxMailService.Status.UNSORTED,new Callback<List<Letter>>() {
             @Override
             public void success(List<Letter> letters, Response response) {
-                gridView.setAdapter(new MailAdapter(getActivity(),letters));
+                gridView.setAdapter(new MailAdapter(context,letters));
             }
 
             @Override

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.OutboxMailService;
@@ -29,21 +30,23 @@ public class DrawerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_drawer,container,false);
 
-        LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);
+        final LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);
 
         mailService.getFolders(new Callback<List<Stack>>() {
             @Override
             public void success(List<Stack> stacks, Response response) {
-
+                for(Stack stack : stacks){
+                    TextView folderItem = (TextView) inflater.inflate(R.layout.folder_list_item,folderLayout,false);
+                    folderItem.setText(stack.getLabel());
+                    folderLayout.addView(folderItem);
+                }
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-
-            }
+            public void failure(RetrofitError retrofitError) {}
         });
 
 

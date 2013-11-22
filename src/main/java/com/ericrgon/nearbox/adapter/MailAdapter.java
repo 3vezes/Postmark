@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.ericrgon.nearbox.LetterGridFragment;
 import com.ericrgon.nearbox.model.Letter;
 import com.squareup.picasso.Picasso;
 
@@ -18,12 +19,14 @@ public class MailAdapter extends BaseAdapter {
     private final List<Letter> letters;
     private final Context context;
     private final LayoutInflater inflater;
+    private final LetterGridFragment.Callbacks callbacks;
 
 
     public MailAdapter(Context context,List<Letter> letters) {
         this.letters = letters;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.callbacks = (LetterGridFragment.Callbacks) context;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class MailAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView view = (ImageView) convertView;
         if (view == null) {
             float density = context.getResources().getDisplayMetrics().density;
@@ -57,6 +60,13 @@ public class MailAdapter extends BaseAdapter {
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);
         picasso.load(url).into(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callbacks.onItemSelected(getItem(position));
+            }
+        });
 
         return view;
     }

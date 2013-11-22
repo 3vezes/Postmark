@@ -32,7 +32,7 @@ import retrofit.client.Response;
  * to listen for item selections.
  */
 public class LetterListActivity extends BaseFragmentActivity
-        implements LetterListFragment.Callbacks {
+        implements LetterGridFragment.Callbacks {
 
     public static final String SESSION = "session";
     /**

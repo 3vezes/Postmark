@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.ericrgon.nearbox.model.Letter;
 
-public class HomeActivity extends BaseFragmentActivity implements LetterListFragment.Callbacks{
+public class HomeActivity extends BaseFragmentActivity implements LetterGridFragment.Callbacks {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -65,7 +65,14 @@ public class HomeActivity extends BaseFragmentActivity implements LetterListFrag
 
     @Override
     public void onItemSelected(Letter id) {
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(LetterDetailFragment.LETTER_ID,id);
+        LetterDetailFragment fragment = new LetterDetailFragment();
+        fragment.setArguments(arguments);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame,fragment)
+                .commit();
     }
 
     @Override

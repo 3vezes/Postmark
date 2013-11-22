@@ -15,6 +15,16 @@ public class Image implements Serializable{
         return images;
     }
 
+    public String getLowestRes(){
+        int smallest = Integer.MAX_VALUE;
+        for(Integer integer : images.keySet()){
+            if(integer < smallest){
+                smallest = integer;
+            }
+        }
+        return images.get(smallest);
+    }
+
     @Override
     public String toString() {
         return "Image{" +

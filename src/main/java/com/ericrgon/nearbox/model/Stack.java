@@ -2,7 +2,9 @@ package com.ericrgon.nearbox.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Stack {
+import java.io.Serializable;
+
+public class Stack implements Serializable{
 
     @SerializedName("_id")
     private final String id;

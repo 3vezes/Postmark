@@ -55,7 +55,7 @@ public class MailAdapter extends BaseAdapter {
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setPadding(8, 8, 8, 8);
         }
-        String url = getItem(position).getPages().get(0).getImages().getImages().get(50);
+        String url = getItem(position).getPages().get(0).getImages().getLowestRes();
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);

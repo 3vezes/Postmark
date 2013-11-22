@@ -1,9 +1,11 @@
 package com.ericrgon.nearbox;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.ericrgon.nearbox.model.Session;
 import com.ericrgon.nearbox.rest.OutboxMailService;
+import com.google.common.eventbus.EventBus;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -14,6 +16,8 @@ import retrofit.client.Response;
 public class BaseFragmentActivity extends FragmentActivity {
 
     private OutboxMailService mailService;
+
+    private final EventBus eventBus = new EventBus();
 
     private static String sessionID = "";
 
@@ -52,4 +56,13 @@ public class BaseFragmentActivity extends FragmentActivity {
         });
     }
 
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        eventBus.register(this);
+    }
 }

@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import com.ericrgon.nearbox.adapter.MailAdapter;
 import com.ericrgon.nearbox.model.Letter;
+import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 
 import java.util.List;
@@ -20,6 +21,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LetterGridFragment extends Fragment{
+
+    public static final String FOLDER_ITEM = "folder";
+
+    public static final String STATUS_ITEM = "status";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -82,15 +87,35 @@ public class LetterGridFragment extends Fragment{
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.letterGrid);
 
-        mailService.getMail(OutboxMailService.Status.UNSORTED,new Callback<List<Letter>>() {
-            @Override
-            public void success(List<Letter> letters, Response response) {
-                gridView.setAdapter(new MailAdapter(context,letters));
-            }
+        Bundle arguments = getArguments();
 
-            @Override
-            public void failure(RetrofitError retrofitError) {}
-        });
+        if(arguments.containsKey(STATUS_ITEM)){
+            OutboxMailService.Status status = (OutboxMailService.Status) arguments.getSerializable(STATUS_ITEM);
+            mailService.getMail(status,new Callback<List<Letter>>() {
+                @Override
+                public void success(List<Letter> letters, Response response) {
+                    gridView.setAdapter(new MailAdapter(context,letters));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {}
+            });
+
+        } else if(arguments.containsKey(FOLDER_ITEM)){
+            Stack stack = (Stack) arguments.getSerializable(FOLDER_ITEM);
+            mailService.getStack(stack.getLabel(),new Callback<List<Letter>>() {
+                @Override
+                public void success(List<Letter> letters, Response response) {
+                    gridView.setAdapter(new MailAdapter(context,letters));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+
+                }
+            });
+        }
+
 
         return rootView;
     }

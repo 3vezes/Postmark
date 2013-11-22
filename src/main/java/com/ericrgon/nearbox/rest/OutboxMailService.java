@@ -21,11 +21,17 @@ public interface OutboxMailService {
     @POST("/session")
     public void authenticate(@Field("username") String username,@Field("password") String password, Callback<Session> sessionCallback);
 
-    public enum Status {UNSORTED("unsorted"),TODO("todo");
+    public enum Status {UNSORTED("unsorted", "Inbox"),TODO("todo", "To-Do");
         private final String status;
+        private final String title;
 
-        Status(String status) {
+        Status(String status, String title) {
             this.status = status;
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return title;
         }
 
         @Override

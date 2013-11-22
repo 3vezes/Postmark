@@ -1,5 +1,6 @@
 package com.ericrgon.nearbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -65,14 +66,10 @@ public class HomeActivity extends BaseFragmentActivity implements LetterGridFrag
 
     @Override
     public void onItemSelected(Letter id) {
-        Bundle arguments = new Bundle();
-        arguments.putSerializable(LetterDetailFragment.LETTER_ID,id);
-        LetterDetailFragment fragment = new LetterDetailFragment();
-        fragment.setArguments(arguments);
+        Intent letterDetailActivity = new Intent(this,LetterDetailActivity.class);
+        letterDetailActivity.putExtra(LetterDetailFragment.LETTER_ID,id);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame,fragment)
-                .commit();
+        startActivity(letterDetailActivity);
     }
 
     @Override

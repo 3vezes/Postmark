@@ -38,8 +38,8 @@ public class LetterDetailActivity extends FragmentActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(LetterDetailFragment.LETTER_ID,
-                    getIntent().getStringExtra(LetterDetailFragment.LETTER_ID));
+            arguments.putSerializable(LetterDetailFragment.LETTER_ID,
+                    getIntent().getSerializableExtra(LetterDetailFragment.LETTER_ID));
             LetterDetailFragment fragment = new LetterDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

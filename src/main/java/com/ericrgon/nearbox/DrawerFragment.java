@@ -76,6 +76,14 @@ public class DrawerFragment extends Fragment {
             }
         });
 
+        View requested = rootView.findViewById(R.id.requested);
+        requested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventBus.post(new StatusSelectedEvent(OutboxMailService.Status.REQUESTED));
+            }
+        });
+
         final LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);
         mailService.getStacks(new Callback<List<Stack>>() {
             @Override

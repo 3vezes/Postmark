@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Page;
 import com.ericrgon.nearbox.model.Stack;
+import com.ericrgon.nearbox.model.Todo;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.squareup.picasso.Picasso;
 
@@ -111,6 +112,42 @@ public class LetterDetailFragment extends Fragment {
                     @Override
                     public void failure(RetrofitError retrofitError) {
                         Log.d("LETTER","Move Failed");
+                    }
+                });
+            }
+        });
+
+        View todo = rootView.findViewById(R.id.todo);
+        todo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mailService.todo(letter.getIdentifier(), System.currentTimeMillis(), Todo.EMPTY, new Callback<Letter>() {
+                    @Override
+                    public void success(Letter letter, Response response) {
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+
+                    }
+                });
+            }
+        });
+
+        View request = rootView.findViewById(R.id.request);
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mailService.request(letter.getIdentifier(),System.currentTimeMillis(),new Callback<Letter>() {
+                    @Override
+                    public void success(Letter letter, Response response) {
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+
                     }
                 });
             }

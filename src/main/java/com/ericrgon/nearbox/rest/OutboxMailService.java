@@ -3,10 +3,12 @@ package com.ericrgon.nearbox.rest;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Session;
 import com.ericrgon.nearbox.model.Stack;
+import com.ericrgon.nearbox.model.Todo;
 
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -22,7 +24,7 @@ public interface OutboxMailService {
     @POST("/session")
     public void authenticate(@Field("username") String username,@Field("password") String password, Callback<Session> sessionCallback);
 
-    public enum Status {UNSORTED("unsorted", "Inbox"),TODO("todo", "To-Do");
+    public enum Status {UNSORTED("unsorted", "Inbox"),TODO("todo", "To-Do"),REQUESTED("requested","Requested");
         private final String status;
         private final String title;
 
@@ -40,6 +42,12 @@ public interface OutboxMailService {
             return status;
         }
     }
+
+    @POST("/v0/mail/{id}/todo")
+    public void todo(@Path("id") int letterID, @Query("_") long timeStamp, @Body Todo todo, Callback<Letter> callback);
+
+    @POST("/v0/mail/{id}/request")
+    public void request(@Path("id") int letterID, @Query("_") long timeStamp, Callback<Letter> callback);
 
     @GET("/v0/mail")
     public void getMail(@Query("status") Status status, Callback<List<Letter>> callback);

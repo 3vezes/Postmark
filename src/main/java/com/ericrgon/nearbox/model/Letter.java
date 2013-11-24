@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Letter implements Serializable{
 
+    @SerializedName("_id")
+    private int identifier;
+
     @SerializedName("pages")
     private List<Page> pages = new ArrayList<Page>();
 
@@ -20,6 +23,10 @@ public class Letter implements Serializable{
 
     public long getZip() {
         return zip;
+    }
+
+    public int getIdentifier() {
+        return identifier;
     }
 
     @Override

@@ -77,11 +77,11 @@ public class DrawerFragment extends Fragment {
         });
 
         final LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);
-        mailService.getFolders(new Callback<List<Stack>>() {
+        mailService.getStacks(new Callback<List<Stack>>() {
             @Override
             public void success(List<Stack> stacks, Response response) {
-                for(final Stack stack : stacks){
-                    TextView folderItem = (TextView) inflater.inflate(R.layout.folder_list_item,folderLayout,false);
+                for (final Stack stack : stacks) {
+                    TextView folderItem = (TextView) inflater.inflate(R.layout.folder_list_item, folderLayout, false);
                     folderItem.setText(stack.getLabel());
                     folderItem.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -94,7 +94,8 @@ public class DrawerFragment extends Fragment {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {}
+            public void failure(RetrofitError retrofitError) {
+            }
         });
 
         return rootView;

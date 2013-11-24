@@ -11,6 +11,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 public interface OutboxMailService {
@@ -47,6 +48,16 @@ public interface OutboxMailService {
     public void getStack(@Query("stack") String stackName, Callback<List<Letter>> callback);
 
     @GET("/v0/stacks")
-    public void getFolders(Callback<List<Stack>> callback);
+    public void getStacks(Callback<List<Stack>> callback);
 
+    @POST("/v0/mail/{id}/shred")
+    public void shred(@Path("id") int letterID,Callback<Letter> callback);
+
+    /**
+     * @param stackName The destination stack name.
+     * @param letterID The letter id to move.
+     * @param timestamp Invoke System System.currentTimeMillis() . Still trying to figure out a way to remove this.
+     */
+    @POST("/v0/stacks/{stackName}/{letterID}?_method=PUT")
+    public void moveLetterToStack(@Path("stackName") String stackName, @Path("letterID") int letterID, @Query("_") long timestamp,Callback<Void> callback);
 }

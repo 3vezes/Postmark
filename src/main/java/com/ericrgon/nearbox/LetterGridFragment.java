@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.ericrgon.nearbox.adapter.MailAdapter;
+import com.ericrgon.nearbox.adapter.IndexAdapter;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.OutboxMailService;
@@ -94,7 +94,7 @@ public class LetterGridFragment extends Fragment{
             mailService.getMail(status,new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {
-                    gridView.setAdapter(new MailAdapter(context,letters));
+                    gridView.setAdapter(new IndexAdapter(context,letters));
                 }
 
                 @Override
@@ -106,7 +106,7 @@ public class LetterGridFragment extends Fragment{
             mailService.getStack(stack.getLabel(),new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {
-                    gridView.setAdapter(new MailAdapter(context,letters));
+                    gridView.setAdapter(new IndexAdapter(context,letters));
                 }
 
                 @Override

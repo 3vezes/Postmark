@@ -22,7 +22,7 @@
     -->
 
     <fragment
-        android:id="@+id/letter_list"
+        android:id="@+id/pages_list"
         android:name="com.ericrgon.nearbox.LetterListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"

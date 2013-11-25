@@ -6,9 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.ericrgon.nearbox.adapter.MailAdapter;
-import com.ericrgon.nearbox.model.Letter;
-
 /**
  * A list fragment representing a list of Letters. This fragment
  * also supports tablet devices by allowing list items to be given an

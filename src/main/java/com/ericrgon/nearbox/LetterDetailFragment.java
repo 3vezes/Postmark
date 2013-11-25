@@ -7,15 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.AbsListView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
+import com.ericrgon.nearbox.adapter.PagesAdapter;
 import com.ericrgon.nearbox.model.Letter;
-import com.ericrgon.nearbox.model.Page;
 import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.model.Todo;
 import com.ericrgon.nearbox.rest.OutboxMailService;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class LetterDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_letter_detail, container, false);
+        RelativeLayout rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_letter_detail, container, false);
 
         View shred = rootView.findViewById(R.id.shred);
         shred.setOnClickListener(new View.OnClickListener() {
@@ -153,20 +153,45 @@ public class LetterDetailFragment extends Fragment {
             }
         });
 
-        LinearLayout content = (LinearLayout) rootView.findViewById(R.id.letter_detail);
+        final View actions = rootView.findViewById(R.id.actions);
 
-        for(Page page : letter.getPages()){
-            ImageView pageView = new ImageView(getActivity());
+        final ListView pagesList = (ListView) rootView.findViewById(R.id.pages_list);
+        pagesList.setAdapter(new PagesAdapter(getActivity(), letter.getPages()));
+        pagesList.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-            String url = page.getImages().getImages().get(100);
+            private final int maxY = actions.getHeight();
 
-            Picasso picasso = Picasso.with(getActivity());
-            picasso.setDebugging(true);
-            picasso.load(url).into(pageView);
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
-            content.addView(pageView);
-        }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int scrollY = getScrollY(pagesList);
+                actions.setTranslationY(Math.max(scrollY,maxY));
+            }
+        });
 
         return rootView;
+    }
+
+    public int getScrollY(ListView listView) {
+        View c = listView.getChildAt(0);
+        if (c == null) {
+            return 0;
+        }
+
+        int firstVisiblePosition = listView.getFirstVisiblePosition();
+        int top = c.getTop();
+
+        int headerHeight = 0;
+        if (firstVisiblePosition >= 1) {
+            headerHeight = listView.getHeight();
+        }
+
+        int returnValue = -top + firstVisiblePosition * c.getHeight() + headerHeight;
+
+        Log.d("SCROLL", String.valueOf(returnValue));
+
+        return returnValue;
     }
 }

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
-import com.ericrgon.nearbox.adapter.MailAdapter;
+import com.ericrgon.nearbox.adapter.IndexAdapter;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 
@@ -58,16 +58,16 @@ public class LetterListActivity extends BaseFragmentActivity
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
             ((LetterListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.letter_list))
+                    .findFragmentById(R.id.pages_list))
                     .setActivateOnItemClick(true);
         }
 
-        listFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.letter_list);
+        listFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pages_list);
 
         getMailService().getMail(OutboxMailService.Status.UNSORTED, new Callback<List<Letter>>() {
             @Override
             public void success(List<Letter> letters, Response response) {
-                listFragment.setListAdapter(new MailAdapter(LetterListActivity.this, letters));
+                listFragment.setListAdapter(new IndexAdapter(LetterListActivity.this, letters));
             }
 
             @Override

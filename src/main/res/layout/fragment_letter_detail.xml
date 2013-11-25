@@ -1,45 +1,45 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+    <ListView
+        android:id="@+id/pages_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
-        android:id="@+id/letter_detail"
-        style="?android:attr/textAppearanceLarge"
+        android:id="@+id/actions"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textIsSelectable="true"
-        android:orientation="vertical"
-        tools:context=".LetterDetailFragment">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:color/black"
+        android:gravity="center">
+        <Button
+            android:id="@+id/shred"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/shred"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shred"
-                android:onClick="onShredClicked"/>
+            android:text="Shred"
+            android:onClick="onShredClicked"/>
 
-            <Button
-                android:id="@+id/move"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Move to Folder"/>
+        <Button
+            android:id="@+id/move"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Move to Folder"/>
 
-            <Button
-                android:id="@+id/todo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Todo"/>
+        <Button
+            android:id="@+id/todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todo"/>
 
-            <Button
-                android:id="@+id/request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Request"/>
-        </LinearLayout>
+        <Button
+            android:id="@+id/request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request"/>
     </LinearLayout>
-</ScrollView>
+
+
+</RelativeLayout>

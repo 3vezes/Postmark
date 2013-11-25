@@ -1,6 +1,7 @@
 package com.ericrgon.nearbox.adapter;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.ericrgon.nearbox.LetterGridFragment;
+import com.ericrgon.nearbox.R;
 import com.ericrgon.nearbox.model.Letter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MailAdapter extends BaseAdapter {
+public class IndexAdapter extends BaseAdapter {
 
     private final List<Letter> letters;
     private final Context context;
@@ -22,7 +24,7 @@ public class MailAdapter extends BaseAdapter {
     private final LetterGridFragment.Callbacks callbacks;
 
 
-    public MailAdapter(Context context,List<Letter> letters) {
+    public IndexAdapter(Context context, List<Letter> letters) {
         this.letters = letters;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -47,19 +49,23 @@ public class MailAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView view = (ImageView) convertView;
-        if (view == null) {
-            float density = context.getResources().getDisplayMetrics().density;
 
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+
+        float density = displayMetrics.density;
+
+        int width = (int) (310 * density);
+        int height = (int) (240 * density);
+
+        if (view == null) {
             view = new ImageView(context);
-            view.setLayoutParams(new GridView.LayoutParams((int) (100 * density),(int) (100 * density)));
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setPadding(8, 8, 8, 8);
+            view.setLayoutParams(new GridView.LayoutParams(width,height));
         }
-        String url = getItem(position).getPages().get(0).getImages().getLowestRes();
+        String url = getItem(position).getPages().get(0).getImages().getLowestRes(displayMetrics);
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);
-        picasso.load(url).into(view);
+        picasso.load(url).placeholder(R.drawable.ic_action_mail).resize(width, height).centerCrop().into(view);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

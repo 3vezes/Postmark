@@ -158,16 +158,20 @@ public class LetterDetailFragment extends Fragment {
         final ListView pagesList = (ListView) rootView.findViewById(R.id.pages_list);
         pagesList.setAdapter(new PagesAdapter(getActivity(), letter.getPages()));
         pagesList.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            private final int maxY = actions.getHeight();
-
+            private int previous = 0;
+            private int current = 0;
+            
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 int scrollY = getScrollY(pagesList);
-                actions.setTranslationY(Math.max(scrollY,maxY));
+                int height = actions.getHeight();
+                int diff = scrollY - previous;
+                current = clamp(current + diff,0,height);
+                actions.setTranslationY(current);
+                previous = scrollY;
             }
         });
 
@@ -188,10 +192,10 @@ public class LetterDetailFragment extends Fragment {
             headerHeight = listView.getHeight();
         }
 
-        int returnValue = -top + firstVisiblePosition * c.getHeight() + headerHeight;
+        return -top + firstVisiblePosition * c.getHeight() + headerHeight;
+    }
 
-        Log.d("SCROLL", String.valueOf(returnValue));
-
-        return returnValue;
+    public static int clamp(int value, int min, int max) {
+        return Math.max(Math.min(value, max), min);
     }
 }

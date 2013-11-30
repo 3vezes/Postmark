@@ -21,12 +21,8 @@
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/move"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            style="@style/LetterActionLayout"
+            android:id="@+id/move">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -43,12 +39,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/todo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            style="@style/LetterActionLayout"
+            android:id="@+id/todo">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,12 +56,8 @@
 
 
         <LinearLayout
-            android:id="@+id/shred"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            style="@style/LetterActionLayout"
+            android:id="@+id/shred">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -87,13 +75,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/request"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_gravity="center">
+            style="@style/LetterActionLayout"
+            android:id="@+id/request">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

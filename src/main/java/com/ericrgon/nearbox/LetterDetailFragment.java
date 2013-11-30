@@ -12,45 +12,34 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.ericrgon.nearbox.adapter.PagesAdapter;
+import com.ericrgon.nearbox.adapter.StackAdapter;
+import com.ericrgon.nearbox.dialog.StackDialog;
 import com.ericrgon.nearbox.model.Letter;
-import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.model.Todo;
 import com.ericrgon.nearbox.rest.OutboxMailService;
-
-import java.util.List;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * A fragment representing a single Letter detail screen.
- * This fragment is either contained in a {@link LetterListActivity}
- * in two-pane mode (on tablets) or a {@link LetterDetailActivity}
- * on handsets.
- */
 public class LetterDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
+
     public static final String LETTER_ID = "letter";
 
     private Letter letter;
 
     private OutboxMailService mailService;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public LetterDetailFragment() {
-    }
+    public LetterDetailFragment() {}
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mailService = ((BaseFragmentActivity) activity).getMailService();
+        EventBus eventBus = ((BaseFragmentActivity) activity).getEventBus();
+        eventBus.register(this);
     }
 
     @Override
@@ -90,30 +79,9 @@ public class LetterDetailFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //Get available stacks
-                mailService.getStacks(new Callback<List<Stack>>() {
-                    @Override
-                    public void success(List<Stack> stacks, Response response) {
-                        Log.d("LETTER","Letter Get Stack: " + stacks.toString());
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Log.d("LETTER","Letter Stacks failed");
-                    }
-                });
-
-                mailService.moveLetterToStack("Coupons",letter.getIdentifier(), System.currentTimeMillis(),new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
-                        Log.d("LETTER","Move Success");
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Log.d("LETTER","Move Failed");
-                    }
-                });
+                StackDialog stackDialog = new StackDialog();
+                stackDialog.setRetainInstance(true);
+                stackDialog.show(getFragmentManager(),"stack");
             }
         });
 
@@ -160,7 +128,7 @@ public class LetterDetailFragment extends Fragment {
         pagesList.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int previous = 0;
             private int current = 0;
-            
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
@@ -176,6 +144,23 @@ public class LetterDetailFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Subscribe
+    public void onMoveStackSelected(StackAdapter.StackSelectedEvent event){
+        StackDialog stackDialog = (StackDialog) getFragmentManager().findFragmentByTag("stack");
+        stackDialog.dismiss();
+        mailService.moveLetterToStack(event.getStack().getLabel(), letter.getIdentifier(), System.currentTimeMillis(), new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                Log.d("LETTER", "Move Success");
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Log.d("LETTER", "Move Failed");
+            }
+        });
     }
 
     public int getScrollY(ListView listView) {

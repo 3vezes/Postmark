@@ -8,4 +8,5 @@
     <string name="todo">Todo</string>
     <string name="add_to">Add</string>
     <string name="request">Request</string>
+    <string name="select_stack">Select destination stack</string>
 </resources>

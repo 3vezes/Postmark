@@ -3,45 +3,46 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#333">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <TextView
+            style="@style/NavDrawerItem"
             android:id="@+id/inbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="Inbox" />
-
-        <TextView
-            android:id="@+id/todo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="Todo" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="Folders"/>
+            android:text="@string/inbox" />
+
+        <TextView
+            style="@style/NavDrawerItem"
+            android:id="@+id/todo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/todo" />
+
+        <TextView
+            style="@style/NavDrawerItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/folders"/>
 
         <LinearLayout
+            style="@style/NavDrawerItem"
             android:id="@+id/folders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"/>
+            android:paddingLeft="16dp"/>
 
         <TextView
+            style="@style/NavDrawerItem"
             android:id="@+id/requested"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
             android:text="Requested"/>
     </LinearLayout>
 </ScrollView>

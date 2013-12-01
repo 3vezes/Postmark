@@ -9,4 +9,6 @@
     <string name="add_to">Add</string>
     <string name="request">Request</string>
     <string name="select_stack">Select destination stack</string>
+    <string name="inbox">Inbox</string>
+    <string name="folders">Folders</string>
 </resources>

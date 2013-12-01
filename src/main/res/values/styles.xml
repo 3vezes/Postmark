@@ -14,4 +14,19 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="NavDrawerItem">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:paddingLeft">16sp</item>
+        <item name="android:paddingRight">16sp</item>
+        <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="NavDrawerItem.Child" parent="NavDrawerItem">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+    </style>
 </resources>

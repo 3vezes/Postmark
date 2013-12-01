@@ -89,7 +89,7 @@ public class DrawerFragment extends Fragment {
             @Override
             public void success(List<Stack> stacks, Response response) {
                 for (final Stack stack : stacks) {
-                    TextView folderItem = (TextView) inflater.inflate(R.layout.folder_list_item, folderLayout, false);
+                    TextView folderItem = (TextView) inflater.inflate(R.layout.drawer_child_item, folderLayout, false);
                     folderItem.setText(stack.getLabel());
                     folderItem.setOnClickListener(new View.OnClickListener() {
                         @Override

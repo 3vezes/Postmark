@@ -19,6 +19,7 @@ import retrofit.http.Query;
 public interface OutboxMailService {
 
     public static final String URL = "https://outbox-carrier.herokuapp.com";
+    public static final String ASSETS_URL = "https://web.outboxmail.com";
 
     @FormUrlEncoded
     @POST("/session")
@@ -68,4 +69,5 @@ public interface OutboxMailService {
      */
     @POST("/v0/stacks/{stackName}/{letterID}?_method=PUT")
     public void moveLetterToStack(@Path("stackName") String stackName, @Path("letterID") int letterID, @Query("_") long timestamp,Callback<Void> callback);
+
 }

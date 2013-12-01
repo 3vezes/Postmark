@@ -1,5 +1,6 @@
 package com.ericrgon.nearbox.model;
 
+import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -39,5 +40,9 @@ public class Stack implements Serializable{
 
     public String getTotal() {
         return total;
+    }
+
+    public String getIconURL(){
+        return OutboxMailService.ASSETS_URL + "/img/icon/stack/" + icon + "-on.png";
     }
 }

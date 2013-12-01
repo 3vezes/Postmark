@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.google.common.eventbus.EventBus;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -89,15 +91,28 @@ public class DrawerFragment extends Fragment {
             @Override
             public void success(List<Stack> stacks, Response response) {
                 for (final Stack stack : stacks) {
-                    TextView folderItem = (TextView) inflater.inflate(R.layout.drawer_child_item, folderLayout, false);
-                    folderItem.setText(stack.getLabel());
-                    folderItem.setOnClickListener(new View.OnClickListener() {
+                    View folderItemLayout = inflater.inflate(R.layout.drawer_child_item, folderLayout, false);
+                    folderItemLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             eventBus.post(new StackSelectedEvent(stack));
                         }
                     });
-                    folderLayout.addView(folderItem);
+
+                    TextView labelName = (TextView) folderItemLayout.findViewById(R.id.text1);
+                    labelName.setText(stack.getLabel());
+
+                    //Load the image icon.
+                    ImageView labelIcon = (ImageView) folderItemLayout.findViewById(R.id.icon);
+
+
+                    Picasso picasso = Picasso.with(getActivity());
+                    picasso.load(stack.getIconURL())
+                            .resize(labelName.getMinHeight(),labelName.getMinHeight())
+                            .centerCrop()
+                            .into(labelIcon);
+
+                    folderLayout.addView(folderItemLayout);
                 }
             }
 

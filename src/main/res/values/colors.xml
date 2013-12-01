@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#e4e4e4</color>
+
+    <!--Android colors -->
+    <color name="android_blue">#33B5E5</color>
+    <color name="android_purple">#AA66CC</color>
+    <color name="android_green">#99CC00</color>
+    <color name="android_yellow">#FFBB33</color>
+    <color name="android_red">#FF4444</color>
 </resources>

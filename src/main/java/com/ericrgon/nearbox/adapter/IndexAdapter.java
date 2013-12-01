@@ -10,8 +10,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.ericrgon.nearbox.LetterGridFragment;
-import com.ericrgon.nearbox.R;
 import com.ericrgon.nearbox.model.Letter;
+import com.ericrgon.nearbox.util.Placeholders;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class IndexAdapter extends BaseAdapter {
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);
-        picasso.load(url).placeholder(R.drawable.ic_action_mail).resize(width, height).centerCrop().into(view);
+        picasso.load(url).placeholder(Placeholders.getItemId()).resize(width, height).centerCrop().into(view);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

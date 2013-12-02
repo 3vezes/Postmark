@@ -1,7 +1,11 @@
 package com.ericrgon.nearbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.ericrgon.nearbox.model.Session;
 import com.ericrgon.nearbox.rest.OutboxMailService;
@@ -64,5 +68,26 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout:
+                //Launch login.
+                Intent login = new Intent(this,LoginActivity.class);
+                startActivity(login);
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

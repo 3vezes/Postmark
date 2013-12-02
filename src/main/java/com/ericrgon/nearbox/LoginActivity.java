@@ -2,6 +2,7 @@ package com.ericrgon.nearbox;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,11 @@ public class LoginActivity extends BaseFragmentActivity {
         Views.inject(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Don't bother using anything from the base class. We're not logged in yet. 
+        return true;
+    }
 
     public void login(View view) {
         authenticate(username.getText().toString(),password.getText().toString(),new Callback<Session>() {
@@ -40,7 +46,6 @@ public class LoginActivity extends BaseFragmentActivity {
             public void success(Session session, Response response) {
                 Intent letterList = new Intent(LoginActivity.this,HomeActivity.class);
                 letterList.putExtra(LetterListActivity.SESSION,session.getSid());
-                letterList.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(letterList);
                 finish();
             }

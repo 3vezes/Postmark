@@ -1,6 +1,7 @@
 package com.ericrgon.nearbox.adapter;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,9 @@ public class PagesAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView pageImage = new ImageView(context);
         pageImage.setAdjustViewBounds(true);
-        
-        String url = pagesList.get(position).getImages().getHighestRes();
+
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        String url = pagesList.get(position).getImages().getRes(displayMetrics);
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);

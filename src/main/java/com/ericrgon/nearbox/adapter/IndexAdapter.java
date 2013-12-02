@@ -61,7 +61,7 @@ public class IndexAdapter extends BaseAdapter {
             view = new ImageView(context);
             view.setLayoutParams(new GridView.LayoutParams(width,height));
         }
-        String url = getItem(position).getPages().get(0).getImages().getLowestRes(displayMetrics);
+        String url = getItem(position).getPages().get(0).getImages().getRes(displayMetrics);
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);

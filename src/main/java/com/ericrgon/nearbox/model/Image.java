@@ -20,7 +20,7 @@ public class Image implements Serializable{
         return images;
     }
 
-    public String getLowestRes(DisplayMetrics metrics){
+    public String getRes(DisplayMetrics metrics){
         int displayDPI = metrics.densityDpi;
 
         List<Integer> sortedDPIList = getSortedDPIList();

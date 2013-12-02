@@ -1,5 +1,6 @@
 package com.ericrgon.nearbox.rest;
 
+import com.ericrgon.nearbox.R;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Session;
 import com.ericrgon.nearbox.model.Stack;
@@ -25,13 +26,15 @@ public interface OutboxMailService {
     @POST("/session")
     public void authenticate(@Field("username") String username,@Field("password") String password, Callback<Session> sessionCallback);
 
-    public enum Status {UNSORTED("unsorted", "Inbox"),TODO("todo", "To-Do"),REQUESTED("requested","Requested");
+    public enum Status {UNSORTED("unsorted", "Inbox", R.drawable.ic_launcher),TODO("todo", "To-Do", R.drawable.todo),REQUESTED("requested","Requested",R.drawable.request);
         private final String status;
         private final String title;
+        private final int drawable;
 
-        Status(String status, String title) {
+        Status(String status, String title, int drawableResource) {
             this.status = status;
             this.title = title;
+            this.drawable = drawableResource;
         }
 
         public String getTitle() {
@@ -41,6 +44,10 @@ public interface OutboxMailService {
         @Override
         public String toString() {
             return status;
+        }
+
+        public int getDrawable() {
+            return drawable;
         }
     }
 

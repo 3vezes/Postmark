@@ -27,13 +27,6 @@ public class LetterGridFragment extends Fragment{
     public static final String STATUS_ITEM = "status";
 
     /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
-    private Callbacks mCallbacks = sDummyCallbacks;
-
-
-    /**
      * A callback interface that all activities containing this fragment must
      * implement. This mechanism allows activities to be notified of item
      * selections.
@@ -44,16 +37,6 @@ public class LetterGridFragment extends Fragment{
          */
         public void onItemSelected(Letter id);
     }
-
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(Letter id) {
-        }
-    };
 
     private OutboxMailService mailService;
     private Context context;
@@ -69,7 +52,6 @@ public class LetterGridFragment extends Fragment{
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
     }
 
     @Override
@@ -77,7 +59,6 @@ public class LetterGridFragment extends Fragment{
         super.onDetach();
 
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
     }
 
 
@@ -102,7 +83,7 @@ public class LetterGridFragment extends Fragment{
             });
 
         } else if(arguments.containsKey(FOLDER_ITEM)){
-            Stack stack = (Stack) arguments.getSerializable(FOLDER_ITEM);
+            final Stack stack = (Stack) arguments.getSerializable(FOLDER_ITEM);
             mailService.getStack(stack.getLabel(),new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {

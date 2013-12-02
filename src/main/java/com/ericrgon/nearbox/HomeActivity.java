@@ -8,9 +8,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ericrgon.nearbox.image.ActionBarIconTarget;
 import com.ericrgon.nearbox.model.Letter;
+import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.google.common.eventbus.Subscribe;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends BaseFragmentActivity implements LetterGridFragment.Callbacks {
 
@@ -85,7 +88,7 @@ public class HomeActivity extends BaseFragmentActivity implements LetterGridFrag
     public void stackSelected(DrawerFragment.StackSelectedEvent item){
         Bundle bundle = new Bundle();
         bundle.putSerializable(LetterGridFragment.FOLDER_ITEM,item.getStack());
-        replaceContent(bundle,item.getStack().getLabel());
+        replaceContent(bundle, item.getStack().getLabel());
     }
 
     @Subscribe
@@ -101,5 +104,17 @@ public class HomeActivity extends BaseFragmentActivity implements LetterGridFrag
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,gridFragment).commit();
         drawerLayout.closeDrawers();
         setTitle(title);
+
+        if(bundle.containsKey(LetterGridFragment.STATUS_ITEM)){
+            //Drawable is locally available. Piece of cake
+            OutboxMailService.Status status = (OutboxMailService.Status) bundle.getSerializable(LetterGridFragment.STATUS_ITEM);
+            getActionBar().setIcon(status.getDrawable());
+        } else if (bundle.containsKey(LetterGridFragment.FOLDER_ITEM)){
+            //Drawable is available from the network and must be pulled down.
+            Stack stack = (Stack) bundle.getSerializable(LetterGridFragment.FOLDER_ITEM);
+            ActionBarIconTarget actionBarIconTarget = new ActionBarIconTarget(getActionBar(),getResources());
+            Picasso.with(this).load(stack.getIconURL()).into(actionBarIconTarget);
+
+        }
     }
 }

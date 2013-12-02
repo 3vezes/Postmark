@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.ericrgon.nearbox.R;
 import com.ericrgon.nearbox.model.Page;
+import com.ericrgon.nearbox.util.Placeholders;
 import com.google.common.collect.Lists;
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +50,7 @@ public class PagesAdapter extends BaseAdapter{
 
         Picasso picasso = Picasso.with(context);
         picasso.setDebugging(true);
-        picasso.load(url).placeholder(R.drawable.ic_action_mail).into(pageImage);
+        picasso.load(url).placeholder(Placeholders.getItemId()).into(pageImage);
 
         return pageImage;
     }

@@ -45,7 +45,6 @@ public class LoginActivity extends BaseFragmentActivity {
             @Override
             public void success(Session session, Response response) {
                 Intent letterList = new Intent(LoginActivity.this,HomeActivity.class);
-                letterList.putExtra(LetterListActivity.SESSION,session.getSid());
                 startActivity(letterList);
                 finish();
             }

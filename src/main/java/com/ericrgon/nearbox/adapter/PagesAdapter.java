@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
+import com.ericrgon.nearbox.ZoomDetectedImageView;
 import com.ericrgon.nearbox.model.Page;
 import com.ericrgon.nearbox.util.Placeholders;
 import com.google.common.collect.Lists;
@@ -44,7 +44,7 @@ public class PagesAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView pageImage = new ImageView(context);
+        ZoomDetectedImageView pageImage = new ZoomDetectedImageView(context);
         pageImage.setAdjustViewBounds(true);
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();

@@ -15,6 +15,11 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Password"/>
+    <CheckBox
+        android:id="@+id/remember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember Me"/>
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"

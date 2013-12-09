@@ -12,4 +12,5 @@
     <string name="inbox">Inbox</string>
     <string name="folders">Folders</string>
     <string name="log_out">Log out</string>
+    <string name="please_enter_your_pin">Please enter your PIN to log in.</string>
 </resources>

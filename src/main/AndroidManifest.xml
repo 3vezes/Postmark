@@ -33,6 +33,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LetterListActivity" />
         </activity>
+        <activity android:name=".PinActivity"/>
     </application>
 
 </manifest>

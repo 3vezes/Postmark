@@ -8,11 +8,10 @@ import java.util.List;
 public final class Placeholders {
 
     private static int counter;
-    private static List<Integer> colors = Lists.newArrayList(R.color.android_blue,
-                                                                R.color.android_green,
-                                                                R.color.android_purple,
-                                                                R.color.android_yellow,
-                                                                R.color.android_red);
+    private static List<Integer> colors = Lists.newArrayList(R.color.blue,
+                                                                R.color.green,
+                                                                R.color.red,
+                                                                R.color.gray);
     public static int getItemId(){
         return colors.get(++counter % colors.size());
     }

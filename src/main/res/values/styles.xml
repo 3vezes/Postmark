@@ -21,6 +21,7 @@
 
     <style name="LoginEditText">
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/background</item>
         <item name="android:textColorHint">@color/background</item>
     </style>
 

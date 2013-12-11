@@ -36,6 +36,9 @@ public class LoginActivity extends BaseFragmentActivity {
     @InjectView(R.id.remember)
     CheckBox rememberMe;
 
+    @InjectView(R.id.logoLayout)
+    View logoLayout;
+
     private Callback<Session> loginCallback;
 
     @Override
@@ -67,6 +70,18 @@ public class LoginActivity extends BaseFragmentActivity {
             }
         };
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        logoLayout.setAlpha(0);
+        logoLayout.animate()
+                .alpha(1.0f)
+                .setDuration(800)
+                .setStartDelay(600)
+                .start();
     }
 
     @Override

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Nearbox</string>
+    <string name="app_name">Postmark</string>
     <string name="title_letter_detail">Letter Detail</string>
     <string name="open_nav">Open navigation drawer</string>
     <string name="close_nav">Close navigation drawer</string>

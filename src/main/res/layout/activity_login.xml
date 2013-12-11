@@ -1,29 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/logoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_image"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Postmark"
+            android:textSize="26sp"
+            android:textColor="@color/background"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingBottom="40dp" />
+    </LinearLayout>
+
     <EditText
+        style="@style/LoginEditText"
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Username"/>
+        android:hint="Username" />
+
     <EditText
+        style="@style/LoginEditText"
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="Password"/>
+        android:hint="Password" />
+
     <CheckBox
         android:id="@+id/remember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remember Me"/>
+        android:text="Remember Me" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:onClick="login"/>
+        android:onClick="login" />
 </LinearLayout>

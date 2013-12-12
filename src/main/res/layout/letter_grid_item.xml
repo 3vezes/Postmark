@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="150dp"
+    android:background="@drawable/card_background">
+    <com.ericrgon.nearbox.image.GridImageView
+        android:id="@+id/indexImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:background="@color/alpha_green"
+        android:text="Yesterday"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        android:textColor="@color/background"
+        android:fontFamily="sans-serif-thin" />
+</RelativeLayout>

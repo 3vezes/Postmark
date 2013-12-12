@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
 
 import com.ericrgon.nearbox.LetterGridFragment;
+import com.ericrgon.nearbox.R;
+import com.ericrgon.nearbox.image.GridImageView;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.util.Placeholders;
 import com.squareup.picasso.Picasso;
@@ -48,32 +48,22 @@ public class IndexAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ImageView view = (ImageView) convertView;
-
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-
-        float density = displayMetrics.density;
-
-        int width = (int) (310 * density);
-        int height = (int) (240 * density);
-
-        if (view == null) {
-            view = new ImageView(context);
-            view.setLayoutParams(new GridView.LayoutParams(width,height));
-        }
         String url = getItem(position).getPages().get(0).getImages().getRes(displayMetrics);
 
-        Picasso picasso = Picasso.with(context);
-        picasso.setDebugging(true);
-        picasso.load(url).placeholder(Placeholders.getItemId()).resize(width, height).centerCrop().into(view);
+        View root = inflater.inflate(R.layout.letter_grid_item, parent, false);
 
-        view.setOnClickListener(new View.OnClickListener() {
+        GridImageView indexImage = (GridImageView) root.findViewById(R.id.indexImage);
+        Picasso.with(context).load(url).placeholder(Placeholders.getItemId()).into(indexImage);
+
+        root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callbacks.onItemSelected(getItem(position));
             }
         });
 
-        return view;
+
+        return root;
     }
 }

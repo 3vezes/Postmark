@@ -98,6 +98,9 @@ public class BaseFragmentActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.menu_logout:
                 //Launch login.
                 Intent login = new Intent(this,LoginActivity.class);

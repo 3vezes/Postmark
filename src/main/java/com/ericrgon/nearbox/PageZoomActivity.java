@@ -40,5 +40,4 @@ public class PageZoomActivity extends BaseFragmentActivity{
             public void onError() {}
         });
     }
-
 }

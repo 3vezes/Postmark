@@ -24,6 +24,8 @@ import retrofit.client.Response;
 
 public class BaseFragmentActivity extends FragmentActivity {
 
+    private static final String CREDENTIALS_PREF_FILE = "CREDENTIALS";
+
     private static final String SALT_PREF = "salt";
 
     protected static final String ENCRYPTED_USER_PREF = "user";
@@ -49,7 +51,6 @@ public class BaseFragmentActivity extends FragmentActivity {
 
         mailService = restAdapter.create(OutboxMailService.class);
     }
-
 
     protected OutboxMailService getMailService() {
         return mailService;
@@ -102,6 +103,7 @@ public class BaseFragmentActivity extends FragmentActivity {
                 onBackPressed();
                 return true;
             case R.id.menu_logout:
+                logout();
                 //Launch login.
                 Intent login = new Intent(this,LoginActivity.class);
                 startActivity(login);
@@ -112,8 +114,14 @@ public class BaseFragmentActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void logout() {
+        //Nuke the user preferences.
+        SharedPreferences.Editor editor = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE).edit();
+        editor.clear().apply();
+    }
+
     private byte[] getSalt(){
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE);
         byte[] salt;
         if(preferences.contains(SALT_PREF)){
             salt = Base64.decode(preferences.getString(SALT_PREF,""),Base64.DEFAULT);
@@ -138,19 +146,19 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     protected void encrypt(SecretKey key, String destinationPreference, String value){
         byte[] encryptedValue = SecurityUtil.encrypt(key, value);
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE).edit();
         editor.putString(destinationPreference,Base64.encodeToString(encryptedValue, Base64.DEFAULT));
         editor.apply();
     }
 
     protected String decrypt(SecretKey key, String destinationPreference){
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE);
         String encryptedValue = preferences.getString(destinationPreference,"");
         return SecurityUtil.decrypt(key, Base64.decode(encryptedValue,Base64.DEFAULT));
     }
 
     protected boolean isPasswordSave() {
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE);
         return preferences.contains(ENCRYPTED_PASSWORD_PREF) && !preferences.getString(ENCRYPTED_PASSWORD_PREF,"").isEmpty();
     }
 }

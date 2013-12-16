@@ -49,6 +49,7 @@ public class LetterDetailFragment extends Fragment {
 
         if (getArguments().containsKey(LETTER_ID)) {
             letter = (Letter) getArguments().getSerializable(LETTER_ID);
+            getActivity().getActionBar().setTitle(letter.getDeliveredDate());
         }
     }
 

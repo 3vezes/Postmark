@@ -12,6 +12,7 @@
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"/>
     <TextView
+        android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -20,9 +21,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:background="@color/alpha_green"
-        android:text="Yesterday"
         android:textSize="44sp"
-        android:textStyle="bold"
         android:textColor="@color/background"
-        android:fontFamily="sans-serif-thin" />
+        android:fontFamily="sans-serif-light" />
 </RelativeLayout>

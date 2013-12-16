@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.ericrgon.nearbox.LetterGridFragment;
 import com.ericrgon.nearbox.R;
@@ -49,9 +50,13 @@ public class IndexAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        String url = getItem(position).getPages().get(0).getImages().getRes(displayMetrics);
+        Letter letter = getItem(position);
+        String url = letter.getPages().get(0).getImages().getRes(displayMetrics);
 
         View root = inflater.inflate(R.layout.letter_grid_item, parent, false);
+
+        TextView date = (TextView) root.findViewById(R.id.date);
+        date.setText(letter.getDeliveredDate());
 
         GridImageView indexImage = (GridImageView) root.findViewById(R.id.indexImage);
         Picasso.with(context).load(url).placeholder(Placeholders.getItemId()).into(indexImage);

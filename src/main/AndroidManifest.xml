@@ -35,6 +35,7 @@
                 android:value=".LetterListActivity" />
         </activity>
         <activity android:name=".PinActivity"/>
+        <activity android:name=".PageZoomActivity"/>
     </application>
 
 </manifest>

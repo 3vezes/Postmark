@@ -29,6 +29,7 @@ public class ZoomDetectedImageView extends ImageView implements ScaleGestureDete
         this.scaleGestureDetector = new ScaleGestureDetector(context,this);
         this.gestureDetectorCompat = new GestureDetectorCompat(context,this);
         this.gestureDetectorCompat.setOnDoubleTapListener(this);
+
     }
 
     @Override
@@ -43,6 +44,7 @@ public class ZoomDetectedImageView extends ImageView implements ScaleGestureDete
         Log.d(LOG_TAG,"onScale() " + detector.getScaleFactor());
         if(detector.getScaleFactor() >= 1){
             Log.d(LOG_TAG,"Pinch Open " + detector.toString());
+            performClick();
         }
         return true;
     }
@@ -86,17 +88,24 @@ public class ZoomDetectedImageView extends ImageView implements ScaleGestureDete
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
         Log.d(LOG_TAG,"Single tap detected");
+        performClick();
         return false;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
         Log.d(LOG_TAG,"Double tap zoom");
+        performClick();
         return false;
     }
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
         return false;
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);
     }
 }

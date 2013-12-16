@@ -1,6 +1,7 @@
 package com.ericrgon.nearbox;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -163,6 +164,13 @@ public class LetterDetailFragment extends Fragment {
         });
     }
 
+    @Subscribe
+    public void onPageSelected(PagesAdapter.PageSelectedEvent pageSelectedEvent){
+        Intent pageZoomIntent = new Intent(getActivity(),PageZoomActivity.class);
+        pageZoomIntent.putExtra(PageZoomActivity.PAGE,pageSelectedEvent.getPage());
+        startActivity(pageZoomIntent);
+    }
+
     public int getScrollY(ListView listView) {
         View c = listView.getChildAt(0);
         if (c == null) {
@@ -183,4 +191,5 @@ public class LetterDetailFragment extends Fragment {
     public static int clamp(int value, int min, int max) {
         return Math.max(Math.min(value, max), min);
     }
+
 }

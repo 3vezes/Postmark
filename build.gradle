@@ -32,4 +32,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:3.0.0'
     compile 'com.squareup.picasso:picasso:2.1.1'
     compile 'com.google.guava:guava:15.0'
+    compile 'com.github.chrisbanes.photoview:library:1.2.2'
 }

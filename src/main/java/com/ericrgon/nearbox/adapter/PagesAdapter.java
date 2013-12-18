@@ -67,7 +67,6 @@ public class PagesAdapter extends BaseAdapter{
         String url = pagesList.get(position).getImages().getRes(displayMetrics);
 
         Picasso picasso = Picasso.with(context);
-        picasso.setDebugging(true);
         picasso.load(url).placeholder(Placeholders.getItemId()).into(pageImage);
 
         pageImage.setOnClickListener(new View.OnClickListener() {

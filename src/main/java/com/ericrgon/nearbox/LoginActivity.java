@@ -2,11 +2,14 @@ package com.ericrgon.nearbox;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ericrgon.nearbox.model.Session;
@@ -51,6 +54,17 @@ public class LoginActivity extends BaseFragmentActivity {
             Intent pinValidateIntent = new Intent(this,PinActivity.class);
             startActivityForResult(pinValidateIntent,VALIDATE_PIN);
         }
+
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_GO || event.getAction() == KeyEvent.ACTION_DOWN){
+                    login.performClick();
+                }
+
+                return false;
+            }
+        });
 
         loginCallback = new Callback<Session>() {
             @Override

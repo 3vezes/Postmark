@@ -9,14 +9,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.ericrgon.nearbox.events.UnauthorizedEvent;
 import com.ericrgon.nearbox.model.Session;
+import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.ericrgon.nearbox.util.SecurityUtil;
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 
 import javax.crypto.SecretKey;
 
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -33,7 +35,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     private OutboxMailService mailService;
 
-    private final EventBus eventBus = new EventBus();
+    private static final EventBus eventBus = new EventBus();
 
     private static String sessionID = "";
 
@@ -44,7 +46,7 @@ public class BaseFragmentActivity extends FragmentActivity {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade requestFacade) {
-                        requestFacade.addQueryParam("sid",sessionID);
+                        requestFacade.addQueryParam("sid", sessionID);
                     }
                 })
                 .build();
@@ -68,12 +70,14 @@ public class BaseFragmentActivity extends FragmentActivity {
         getMailService().authenticate(username,password,new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
+                super.success(session,response);
                 sessionID = session.getSid();
                 sessionCallback.success(session,response);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
                 sessionCallback.failure(retrofitError);
             }
         });
@@ -87,6 +91,12 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventBus.unregister(this);
     }
 
     @Override
@@ -104,10 +114,6 @@ public class BaseFragmentActivity extends FragmentActivity {
                 return true;
             case R.id.menu_logout:
                 logout();
-                //Launch login.
-                Intent login = new Intent(this,LoginActivity.class);
-                startActivity(login);
-                finish();
                 return true;
         }
 
@@ -118,6 +124,11 @@ public class BaseFragmentActivity extends FragmentActivity {
         //Nuke the user preferences.
         SharedPreferences.Editor editor = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE).edit();
         editor.clear().apply();
+
+        //Launch login.
+        Intent login = new Intent(this,LoginActivity.class);
+        startActivity(login);
+        finish();
     }
 
     private byte[] getSalt(){
@@ -160,5 +171,18 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected boolean isPasswordSave() {
         SharedPreferences preferences = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE);
         return preferences.contains(ENCRYPTED_PASSWORD_PREF) && !preferences.getString(ENCRYPTED_PASSWORD_PREF,"").isEmpty();
+    }
+
+    public static EventBus getBus(){
+        return eventBus;
+    }
+
+    @Subscribe
+    public void unauthorizedEvent(UnauthorizedEvent unauthorizedEvent){
+        if(isPasswordSave()){
+            //Attempt to re-authenticate the user
+        } else {
+            logout();
+        }
     }
 }

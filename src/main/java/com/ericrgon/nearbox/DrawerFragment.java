@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ericrgon.nearbox.model.Stack;
+import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.ericrgon.nearbox.util.Placeholders;
 import com.google.common.eventbus.EventBus;
@@ -18,7 +19,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -91,6 +91,7 @@ public class DrawerFragment extends Fragment {
         mailService.getStacks(new Callback<List<Stack>>() {
             @Override
             public void success(List<Stack> stacks, Response response) {
+                super.success(stacks,response);
                 for (final Stack stack : stacks) {
                     View folderItemLayout = inflater.inflate(R.layout.drawer_child_item, folderLayout, false);
                     folderItemLayout.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +120,7 @@ public class DrawerFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
             }
         });
 

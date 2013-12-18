@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import com.ericrgon.nearbox.adapter.StackAdapter;
 import com.ericrgon.nearbox.model.Stack;
+import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -35,11 +35,14 @@ public class StackListFragment extends ListFragment {
         mailService.getStacks(new Callback<List<Stack>>() {
             @Override
             public void success(List<Stack> stacks, Response response) {
+                super.success(stacks,response);
                 setListAdapter(new StackAdapter(getActivity(),stacks));
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {}
+            public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
+            }
         });
 
         return super.onCreateView(inflater, container, savedInstanceState);

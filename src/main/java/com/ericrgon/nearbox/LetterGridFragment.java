@@ -12,11 +12,11 @@ import android.widget.GridView;
 import com.ericrgon.nearbox.adapter.IndexAdapter;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Stack;
+import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -75,11 +75,14 @@ public class LetterGridFragment extends Fragment{
             mailService.getMail(status,new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {
+                    super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {}
+                public void failure(RetrofitError retrofitError) {
+                    super.failure(retrofitError);
+                }
             });
 
         } else if(arguments.containsKey(FOLDER_ITEM)){
@@ -87,12 +90,13 @@ public class LetterGridFragment extends Fragment{
             mailService.getStack(stack.getLabel(),new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {
+                    super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-
+                    super.failure(retrofitError);
                 }
             });
         }

@@ -8,7 +8,6 @@ import com.ericrgon.nearbox.model.Todo;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

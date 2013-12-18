@@ -10,12 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ericrgon.nearbox.model.Session;
+import com.ericrgon.nearbox.rest.Callback;
 
 import javax.crypto.SecretKey;
 
 import butterknife.InjectView;
 import butterknife.Views;
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -55,6 +55,7 @@ public class LoginActivity extends BaseFragmentActivity {
         loginCallback = new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
+                super.success(session,response);
                 if(rememberMe.isChecked()){
                     //Fire the intent to create and capture the users pin.
                     Intent pinIntent = new Intent(getApplication(),PinActivity.class);
@@ -66,6 +67,7 @@ public class LoginActivity extends BaseFragmentActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
                 Toast.makeText(LoginActivity.this,"Invalid Login Credentials",Toast.LENGTH_LONG).show();
             }
         };

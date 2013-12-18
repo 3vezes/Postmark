@@ -17,11 +17,11 @@ import com.ericrgon.nearbox.adapter.StackAdapter;
 import com.ericrgon.nearbox.dialog.StackDialog;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Todo;
+import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -64,11 +64,13 @@ public class LetterDetailFragment extends Fragment {
                 mailService.shred(letter.getIdentifier(),new Callback<Letter>() {
                     @Override
                     public void success(Letter letter, Response response) {
+                        super.success(letter,response);
                         Log.d("LETTER", "Shred Success");
                     }
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
+                        super.failure(retrofitError);
                         Log.d("LETTER", "Shred Failure");
                     }
                 });
@@ -94,12 +96,12 @@ public class LetterDetailFragment extends Fragment {
                 mailService.todo(letter.getIdentifier(), System.currentTimeMillis(), Todo.EMPTY, new Callback<Letter>() {
                     @Override
                     public void success(Letter letter, Response response) {
-
+                        super.success(letter,response);
                     }
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-
+                        super.failure(retrofitError);
                     }
                 });
             }
@@ -112,12 +114,12 @@ public class LetterDetailFragment extends Fragment {
                 mailService.request(letter.getIdentifier(),System.currentTimeMillis(),new Callback<Letter>() {
                     @Override
                     public void success(Letter letter, Response response) {
-
+                        super.success(letter,response);
                     }
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-
+                        super.failure(retrofitError);
                     }
                 });
             }
@@ -155,11 +157,13 @@ public class LetterDetailFragment extends Fragment {
         mailService.moveLetterToStack(event.getStack().getLabel(), letter.getIdentifier(), System.currentTimeMillis(), new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
+                super.success(aVoid,response);
                 Log.d("LETTER", "Move Success");
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
                 Log.d("LETTER", "Move Failed");
             }
         });

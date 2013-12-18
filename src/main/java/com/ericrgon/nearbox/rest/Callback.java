@@ -14,7 +14,7 @@ public class Callback<T> implements retrofit.Callback<T>{
     @Override
     public void failure(RetrofitError retrofitError) {
         // Unauthorized
-        if(retrofitError.getResponse().getStatus() == 401){
+        if(retrofitError.getResponse() != null && retrofitError.getResponse().getStatus() == 401){
             //Let inform the base activity of this.
             BaseFragmentActivity.getBus().post(new UnauthorizedEvent(retrofitError));
         }

@@ -13,5 +13,8 @@
     <string name="folders">Folders</string>
     <string name="log_out">Log out</string>
     <string name="please_enter_your_pin">Please enter your PIN to log in.</string>
+    <string name="please_set_your_pin">Please set your PIN.</string>
+    <string name="please_confirm_your_pin">Please confirm your PIN.</string>
     <string name="delete">Del</string>
+    <string name="invalid_login_credentials">Invalid Login Credentials</string>
 </resources>

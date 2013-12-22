@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#FEFEFE</color>
+    <color name="background">#E4E3E3</color>
 
     <!--Android colors -->
     <color name="blue">#0085C9</color>

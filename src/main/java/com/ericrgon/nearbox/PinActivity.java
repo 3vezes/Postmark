@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import butterknife.InjectView;
 import butterknife.Views;
 
 /**
@@ -12,20 +13,25 @@ import butterknife.Views;
  */
 public class PinActivity extends BaseFragmentActivity {
 
-    public static final String NEW_PIN = "newPin";
     public static final String PIN_DATA = "pin";
+    public static final String PIN_MESSAGE = "pinMessage";
 
-    private char[] pin = new char[4];
+    private static final int PIN_LENGTH = 4;
 
+    private final char[] pin = new char[PIN_LENGTH];
     private int current = 0;
+
+    @InjectView(R.id.message)
+    TextView pinMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
         Views.inject(this);
-    }
 
+        pinMessage.setText(getIntent().getIntExtra(PIN_MESSAGE,R.string.please_enter_your_pin));
+    }
 
     public void onDigitClicked(View view) {
         TextView digit = (TextView) view;
@@ -38,8 +44,8 @@ public class PinActivity extends BaseFragmentActivity {
             current++;
         }
 
-        if(current == 4){
-            Intent intent = new Intent();
+        if(current == PIN_LENGTH){
+            Intent intent = getIntent();
             intent.putExtra(PinActivity.PIN_DATA,new String(pin));
             setResult(RESULT_OK, intent);
             finish();

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Letter implements Serializable{
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEEE\nMMM d");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEEE MMM d");
 
     @SerializedName("_id")
     private int identifier;

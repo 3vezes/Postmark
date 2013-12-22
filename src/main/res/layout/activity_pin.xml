@@ -45,30 +45,41 @@
         android:layout_gravity="center"
         android:columnCount="3">
         <Button android:id="@+id/key_1"
-            android:text="1"/>
+            android:text="1"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_2"
-            android:text="2"/>
+            android:text="2"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_3"
-            android:text="3"/>
+            android:text="3"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_4"
-            android:text="4"/>
+            android:text="4"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_5"
-            android:text="5"/>
+            android:text="5"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_6"
-            android:text="6"/>
+            android:text="6"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_7"
-            android:text="7"/>
+            android:text="7"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_8"
-            android:text="8"/>
+            android:text="8"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/key_9"
-            android:text="9"/>
+            android:text="9"
+            android:onClick="onDigitClicked"/>
         <Button
             android:enabled="false"
             />
         <Button android:id="@+id/key_0"
-            android:text="0"/>
+            android:text="0"
+            android:onClick="onDigitClicked"/>
         <Button android:id="@+id/back"
-            android:text="Del"/>
+            android:text="@string/delete"
+            android:onClick="onDigitClicked"/>
     </GridLayout>
 
 </LinearLayout>

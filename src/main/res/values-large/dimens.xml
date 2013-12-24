@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="grid_padding" type="dimen">5dp</item>
+</resources>

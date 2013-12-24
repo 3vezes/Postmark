@@ -7,6 +7,7 @@
     android:background="@drawable/card_background">
     <com.ericrgon.nearbox.image.GridImageView
         android:id="@+id/indexImage"
+        android:background="@drawable/loading_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"

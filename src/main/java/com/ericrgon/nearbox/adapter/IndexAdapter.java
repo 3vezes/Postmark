@@ -12,7 +12,6 @@ import com.ericrgon.nearbox.LetterGridFragment;
 import com.ericrgon.nearbox.R;
 import com.ericrgon.nearbox.image.GridImageView;
 import com.ericrgon.nearbox.model.Letter;
-import com.ericrgon.nearbox.util.Placeholders;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -59,7 +58,9 @@ public class IndexAdapter extends BaseAdapter {
         date.setText(letter.getDeliveredDate());
 
         GridImageView indexImage = (GridImageView) root.findViewById(R.id.indexImage);
-        Picasso.with(context).load(url).placeholder(Placeholders.getItemId()).into(indexImage);
+        Picasso.with(context)
+                .load(url)
+                .into(indexImage);
 
         root.setOnClickListener(new View.OnClickListener() {
             @Override

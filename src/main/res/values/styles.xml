@@ -54,4 +54,11 @@
         <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
+
+    <style name="PinButton" parent="android:Widget.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:background">@drawable/button_pin</item>
+    </style>
 </resources>

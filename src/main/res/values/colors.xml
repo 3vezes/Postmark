@@ -4,9 +4,10 @@
 
     <!--Android colors -->
     <color name="blue">#0085C9</color>
+    <color name="blue_underline">#005599</color>
     <color name="green">#00AFAB</color>
     <color name="alpha_blue">#EE0085C9</color>
     <color name="red">#E1261C</color>
     <color name="gray">#7C868D</color>
-
+    <color name="white">@color/background</color>
 </resources>

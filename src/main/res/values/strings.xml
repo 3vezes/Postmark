@@ -17,4 +17,6 @@
     <string name="please_confirm_your_pin">Please confirm your PIN.</string>
     <string name="delete">Del</string>
     <string name="invalid_login_credentials">Invalid Login Credentials</string>
+    <string name="empty_folder">Empty Folder</string>
+    <string name="empty_sub_text">Try adding a letter to this folder.</string>
 </resources>

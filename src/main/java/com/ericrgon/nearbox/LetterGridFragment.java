@@ -69,6 +69,7 @@ public class LetterGridFragment extends Fragment{
 
         final ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
         final GridView gridView = (GridView) rootView.findViewById(R.id.letterGrid);
+        final View emptyState = rootView.findViewById(android.R.id.empty);
 
         Bundle arguments = getArguments();
 
@@ -79,7 +80,7 @@ public class LetterGridFragment extends Fragment{
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
-                    setContentVisible(gridView,progressBar);
+                    setContentVisible(gridView,progressBar,emptyState,letters.isEmpty());
                 }
 
                 @Override
@@ -95,7 +96,7 @@ public class LetterGridFragment extends Fragment{
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
-                    setContentVisible(gridView,progressBar);
+                    setContentVisible(gridView,progressBar,emptyState,letters.isEmpty());
                 }
 
                 @Override
@@ -107,8 +108,15 @@ public class LetterGridFragment extends Fragment{
         return rootView;
     }
 
-    private void setContentVisible(View content, View progress){
-        progress.setVisibility(View.GONE);
-        content.setVisibility(View.VISIBLE);
+    private void setContentVisible(View content, View progress,View emptyView ,boolean isEmpty){
+        if(isEmpty){
+            emptyView.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
+            content.setVisibility(View.GONE);
+        } else {
+            progress.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            content.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -87,11 +87,17 @@ public class DrawerFragment extends Fragment {
             }
         });
 
+        final View progressBar = rootView.findViewById(R.id.progress);
+
         final LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);
         mailService.getStacks(new Callback<List<Stack>>() {
             @Override
             public void success(List<Stack> stacks, Response response) {
                 super.success(stacks,response);
+
+                //Hide progress bar.
+                progressBar.setVisibility(View.GONE);
+
                 for (final Stack stack : stacks) {
                     View folderItemLayout = inflater.inflate(R.layout.drawer_child_item, folderLayout, false);
                     folderItemLayout.setOnClickListener(new View.OnClickListener() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.ericrgon.nearbox.adapter.IndexAdapter;
 import com.ericrgon.nearbox.model.Letter;
@@ -64,8 +65,9 @@ public class LetterGridFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_letter_grid,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_letter_grid, container, false);
 
+        final ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
         final GridView gridView = (GridView) rootView.findViewById(R.id.letterGrid);
 
         Bundle arguments = getArguments();
@@ -77,6 +79,7 @@ public class LetterGridFragment extends Fragment{
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
+                    setContentVisible(gridView,progressBar);
                 }
 
                 @Override
@@ -92,6 +95,7 @@ public class LetterGridFragment extends Fragment{
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
                     gridView.setAdapter(new IndexAdapter(context,letters));
+                    setContentVisible(gridView,progressBar);
                 }
 
                 @Override
@@ -100,8 +104,11 @@ public class LetterGridFragment extends Fragment{
                 }
             });
         }
-
-
         return rootView;
+    }
+
+    private void setContentVisible(View content, View progress){
+        progress.setVisibility(View.GONE);
+        content.setVisibility(View.VISIBLE);
     }
 }

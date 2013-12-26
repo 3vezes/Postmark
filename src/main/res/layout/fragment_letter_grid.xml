@@ -14,5 +14,11 @@
         android:verticalSpacing="@dimen/grid_padding"
         android:horizontalSpacing="@dimen/grid_padding"
         android:stretchMode="columnWidth"
-        android:gravity="center" />
+        android:gravity="center"
+        android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 </FrameLayout>

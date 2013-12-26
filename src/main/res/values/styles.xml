@@ -75,4 +75,11 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:minWidth">44sp</item>
     </style>
+
+    <style name="PinLayout">
+        <item name="android:layout_width">@dimen/pinWidth</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 </resources>

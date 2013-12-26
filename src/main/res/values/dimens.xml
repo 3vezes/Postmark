@@ -3,4 +3,9 @@
     <item name="grid_rows" type="integer">1</item>
     <item name="grid_padding" type="dimen">0dp</item>
     <item name="text_size_large" type="dimen">22sp</item>
+    <item name="pinWidth" type="string">match_parent</item>
+
+    <!-- Constant for match parent layout attribute -->
+    <integer name="match_parent">-1</integer>
+    <dimen name="pinWidth">@integer/match_parent</dimen>
 </resources>

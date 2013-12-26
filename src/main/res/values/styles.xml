@@ -56,9 +56,23 @@
     </style>
 
     <style name="PinButton" parent="android:Widget.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:background">@drawable/button_pin</item>
+    </style>
+
+    <style name="PinDigit">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:textSize">44sp</item>
+        <item name="android:focusable">false</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:minWidth">44sp</item>
     </style>
 </resources>

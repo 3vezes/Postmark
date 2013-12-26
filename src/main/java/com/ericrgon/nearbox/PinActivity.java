@@ -3,6 +3,7 @@ package com.ericrgon.nearbox;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.InjectView;
@@ -24,6 +25,18 @@ public class PinActivity extends BaseFragmentActivity {
     @InjectView(R.id.message)
     TextView pinMessage;
 
+    @InjectView(R.id.digit1)
+    EditText digit1;
+
+    @InjectView(R.id.digit2)
+    EditText digit2;
+
+    @InjectView(R.id.digit3)
+    EditText digit3;
+
+    @InjectView(R.id.digit4)
+    EditText digit4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +51,12 @@ public class PinActivity extends BaseFragmentActivity {
 
         if(digit.getId() == R.id.back){
             //User pressed delete.
+            setDigit(current,"");
             current--;
         } else {
             pin[current] = digit.getText().charAt(0);
             current++;
+            setDigit(current,"1");
         }
 
         if(current == PIN_LENGTH){
@@ -49,6 +64,24 @@ public class PinActivity extends BaseFragmentActivity {
             intent.putExtra(PinActivity.PIN_DATA,new String(pin));
             setResult(RESULT_OK, intent);
             finish();
+        }
+
+    }
+
+    private void setDigit(int index, String value){
+        switch (index){
+            case 1:
+                digit1.setText(value);
+                break;
+            case 2:
+                digit2.setText(value);
+                break;
+            case 3:
+                digit3.setText(value);
+                break;
+            case 4:
+                digit4.setText(value);
+                break;
         }
     }
 }

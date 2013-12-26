@@ -23,32 +23,28 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/digit1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/PinDigit"
+            android:id="@+id/digit1" />
 
         <EditText
-            android:id="@+id/digit2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/PinDigit"
+            android:id="@+id/digit2" />
 
         <EditText
-            android:id="@+id/digit3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/PinDigit"
+            android:id="@+id/digit3" />
 
         <EditText
-            android:id="@+id/digit4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/PinDigit"
+            android:id="@+id/digit4" />
     </LinearLayout>
 
     <!--Key pad -->
-    <GridLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:columnCount="3">
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
 
         <Button
             style="@style/PinButton"
@@ -67,6 +63,12 @@
             android:id="@+id/key_3"
             android:text="3"
             android:onClick="onDigitClicked" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             style="@style/PinButton"
@@ -86,6 +88,13 @@
             android:text="6"
             android:onClick="onDigitClicked" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
             style="@style/PinButton"
             android:id="@+id/key_7"
@@ -104,6 +113,13 @@
             android:text="9"
             android:onClick="onDigitClicked" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
             style="@style/PinButton"
             android:enabled="false" />
@@ -119,6 +135,5 @@
             android:id="@+id/back"
             android:text="@string/delete"
             android:onClick="onDigitClicked" />
-    </GridLayout>
-
+    </LinearLayout>
 </LinearLayout>

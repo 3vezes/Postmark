@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:orientation="vertical">
 
                 <ImageView
@@ -42,58 +43,74 @@
                     android:paddingBottom="40dp" />
             </LinearLayout>
 
-            <EditText
-                style="@style/LoginEditText"
-                android:id="@+id/username"
+            <LinearLayout
+                android:id="@+id/credentialsLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="Username" />
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/logoLayout"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
 
-            <EditText
-                style="@style/LoginEditText"
-                android:id="@+id/password"
+                <EditText
+                    style="@style/LoginEditText"
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:hint="Username" />
+
+                <EditText
+                    style="@style/LoginEditText"
+                    android:id="@+id/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true"
+                    android:hint="Password" />
+
+                <CheckBox
+                    android:id="@+id/remember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember Me" />
+
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:textColor="@color/blue"
+                    android:background="@drawable/button_white"
+                    android:onClick="login" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/loginTypeLayout"
+                android:layout_below="@id/logoLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:imeOptions="actionGo"
-                android:singleLine="true"
-                android:hint="Password" />
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
 
-            <CheckBox
-                android:id="@+id/remember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remember Me" />
+                <Button
+                    style="@style/LoginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="onShowCredentials"/>
 
-            <Button
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:textColor="@color/blue"
-                android:background="@drawable/button_white"
-                android:onClick="login" />
-        </LinearLayout>
+                <Button
+                    style="@style/LoginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/try_without_login"
+                    android:onClick="onDemoLogin" />
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Try without login"
-            android:textColor="@color/blue"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:background="@drawable/button_white"
-            android:onClick="onDemoLogin" />
-    </LinearLayout>
-</RelativeLayout>
+</FrameLayout>

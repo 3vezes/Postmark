@@ -82,4 +82,12 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:orientation">horizontal</item>
     </style>
+
+    <style name="LoginButton">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:background">@drawable/button_white</item>
+    </style>
 </resources>

@@ -45,6 +45,12 @@ public class LoginActivity extends BaseFragmentActivity {
     @InjectView(R.id.logoLayout)
     View logoLayout;
 
+    @InjectView(R.id.credentialsLayout)
+    View credentialsLayout;
+
+    @InjectView(R.id.loginTypeLayout)
+    View loginTypeLayout;
+
     private Callback<Session> loginCallback;
 
     @Override
@@ -161,5 +167,10 @@ public class LoginActivity extends BaseFragmentActivity {
 
     public void onDemoLogin(View view) {
         authenticate("demo","",loginCallback);
+    }
+
+    public void onShowCredentials(View view) {
+        credentialsLayout.setVisibility(View.VISIBLE);
+        loginTypeLayout.setVisibility(View.GONE);
     }
 }

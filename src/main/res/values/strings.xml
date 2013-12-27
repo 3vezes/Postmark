@@ -18,5 +18,35 @@
     <string name="delete">Del</string>
     <string name="invalid_login_credentials">Invalid Login Credentials</string>
     <string name="empty_folder">Empty Folder</string>
-    <string name="empty_sub_text">Try adding a letter to this folder.</string>
+    <string name="empty_sub_text">Try adding a letter.</string>
+    <string name="about">About</string>
+
+    <string name="android_support_header">Android Support V4</string>
+    <string name="gson_header">Gson</string>
+    <string name="retrofit_header">Retrofit</string>
+    <string name="butterknife_header">Butterknife</string>
+    <string name="picasso_header">Picasso</string>
+    <string name="guava_header">Guava</string>
+    <string name="photoview_header">PhotoView</string>
+
+    <string name="android_support_copyright">Copyright © 2011 The Android Open Source Project</string>
+    <string name="gson_copyright">Copyright © 2008–2009 Google Inc.</string>
+    <string name="retrofit_copyright">Copyright 2013 Square, Inc.</string>
+    <string name="butterknife_copyright">Copyright 2013 Jake Wharton</string>
+    <string name="picasso_copyright">Copyright 2013 Square, Inc.</string>
+    <string name="guava_copyright">Copyright © 2009 The Guava Authors</string>
+    <string name="photoview_copyright">Copyright 2011, 2012 Chris Banes</string>
+
+    <string name="apache_license">
+        Licensed under the Apache License, Version 2.0 (the "License");\n
+        you may not use this file except in compliance with the License.\n
+        You may obtain a copy of the License at\n\n
+            \thttp://www.apache.org/licenses/LICENSE-2.0\n\n
+        Unless required by applicable law or agreed to in writing, software\n
+        distributed under the License is distributed on an "AS IS" BASIS,\n
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+        See the License for the specific language governing permissions and\n
+        limitations under the License.\n
+    </string>
+
 </resources>

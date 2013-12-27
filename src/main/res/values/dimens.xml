@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="text_size_large" type="dimen">22sp</item>
+    <item name="text_size_small" type="dimen">14sp</item>
     <item name="text_size_medium" type="dimen">18sp</item>
+    <item name="text_size_large" type="dimen">22sp</item>
+
 
     <item name="grid_rows" type="integer">1</item>
     <item name="grid_padding" type="dimen">0dp</item>

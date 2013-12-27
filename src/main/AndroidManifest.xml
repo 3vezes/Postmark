@@ -37,6 +37,7 @@
         </activity>
         <activity android:name=".PinActivity"/>
         <activity android:name=".PageZoomActivity"/>
+        <activity android:name=".LicenseListActivity"/>
     </application>
 
 </manifest>

@@ -112,6 +112,9 @@ public class BaseFragmentActivity extends FragmentActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.menu_about:
+                startActivity(new Intent(this,LicenseListActivity.class));
+                return true;
             case R.id.menu_logout:
                 logout();
                 return true;

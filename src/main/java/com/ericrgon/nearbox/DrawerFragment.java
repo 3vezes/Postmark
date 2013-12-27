@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.ericrgon.nearbox.model.Stack;
 import com.ericrgon.nearbox.rest.Callback;
 import com.ericrgon.nearbox.rest.OutboxMailService;
-import com.ericrgon.nearbox.util.Placeholders;
 import com.google.common.eventbus.EventBus;
 import com.squareup.picasso.Picasso;
 
@@ -110,13 +109,18 @@ public class DrawerFragment extends Fragment {
                     TextView labelName = (TextView) folderItemLayout.findViewById(R.id.text1);
                     labelName.setText(stack.getLabel());
 
+                    int minHeight = labelName.getMinHeight();
+
                     //Load the image icon.
                     ImageView labelIcon = (ImageView) folderItemLayout.findViewById(R.id.icon);
 
+                    //Reserve this space for when the image loads.
+                    labelIcon.setMinimumWidth(minHeight);
+                    labelIcon.setMinimumHeight(minHeight);
+
                     Picasso picasso = Picasso.with(getActivity());
                     picasso.load(stack.getIconURL())
-                            .placeholder(Placeholders.getItemId())
-                            .resize(labelName.getMinHeight(), labelName.getMinHeight())
+                            .resize(minHeight, minHeight)
                             .centerCrop()
                             .into(labelIcon);
 

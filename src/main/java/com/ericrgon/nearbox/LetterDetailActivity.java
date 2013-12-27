@@ -2,6 +2,17 @@ package com.ericrgon.nearbox;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.ericrgon.nearbox.adapter.StackAdapter;
+import com.ericrgon.nearbox.dialog.StackDialog;
+import com.ericrgon.nearbox.model.Letter;
+import com.ericrgon.nearbox.rest.Callback;
+import com.ericrgon.nearbox.rest.OutboxMailService;
+import com.google.common.eventbus.Subscribe;
+
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * An activity representing a single Letter detail screen. This
@@ -13,11 +24,16 @@ import android.view.MenuItem;
  */
 public class LetterDetailActivity extends BaseFragmentActivity {
 
+    private OutboxMailService mailService;
+    private Letter letter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letter_detail);
 
+        mailService = getMailService();
+        letter = (Letter) getIntent().getSerializableExtra(LetterDetailFragment.LETTER_ID);
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -34,8 +50,7 @@ public class LetterDetailActivity extends BaseFragmentActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putSerializable(LetterDetailFragment.LETTER_ID,
-                    getIntent().getSerializableExtra(LetterDetailFragment.LETTER_ID));
+            arguments.putSerializable(LetterDetailFragment.LETTER_ID, letter);
             LetterDetailFragment fragment = new LetterDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -53,4 +68,24 @@ public class LetterDetailActivity extends BaseFragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Subscribe
+    public void onMoveStackSelected(StackAdapter.StackSelectedEvent event){
+        StackDialog stackDialog = (StackDialog) getSupportFragmentManager().findFragmentByTag("stack");
+        stackDialog.dismiss();
+        mailService.moveLetterToStack(event.getStack().getLabel(), letter.getIdentifier(), System.currentTimeMillis(), new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                super.success(aVoid,response);
+                finish();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                super.failure(retrofitError);
+                Toast.makeText(LetterDetailActivity.this,getString(R.string.generic_error),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

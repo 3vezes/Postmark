@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.ericrgon.nearbox.adapter.PagesAdapter;
-import com.ericrgon.nearbox.adapter.StackAdapter;
 import com.ericrgon.nearbox.dialog.StackDialog;
 import com.ericrgon.nearbox.model.Letter;
 import com.ericrgon.nearbox.model.Todo;
@@ -148,25 +147,6 @@ public class LetterDetailFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    @Subscribe
-    public void onMoveStackSelected(StackAdapter.StackSelectedEvent event){
-        StackDialog stackDialog = (StackDialog) getFragmentManager().findFragmentByTag("stack");
-        stackDialog.dismiss();
-        mailService.moveLetterToStack(event.getStack().getLabel(), letter.getIdentifier(), System.currentTimeMillis(), new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                super.success(aVoid,response);
-                Log.d("LETTER", "Move Success");
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                super.failure(retrofitError);
-                Log.d("LETTER", "Move Failed");
-            }
-        });
     }
 
     @Subscribe

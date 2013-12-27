@@ -158,4 +158,8 @@ public class LoginActivity extends BaseFragmentActivity {
         finish();
 
     }
+
+    public void onDemoLogin(View view) {
+        authenticate("demo","",loginCallback);
+    }
 }

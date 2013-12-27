@@ -51,7 +51,13 @@ public class LoginActivity extends BaseFragmentActivity {
     @InjectView(R.id.loginTypeLayout)
     View loginTypeLayout;
 
+    @InjectView(R.id.progress)
+    View progressBar;
+
     private Callback<Session> loginCallback;
+
+    private int previousCredentialsLayoutVisibility;
+    private int previousLoginLayoutVisibility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +97,18 @@ public class LoginActivity extends BaseFragmentActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 super.failure(retrofitError);
-                Toast.makeText(LoginActivity.this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();
+
+                if(retrofitError.isNetworkError()){
+                    Toast.makeText(LoginActivity.this,"Can't load data. Check your connection",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();
+                }
+
+                //Restore the previous login layouts
+                credentialsLayout.setVisibility(previousCredentialsLayoutVisibility);
+                loginTypeLayout.setVisibility(previousLoginLayoutVisibility);
+
+                progressBar.setVisibility(View.GONE);
             }
         };
 
@@ -167,6 +184,21 @@ public class LoginActivity extends BaseFragmentActivity {
 
     public void onDemoLogin(View view) {
         authenticate("demo","",loginCallback);
+    }
+
+    @Override
+    protected void authenticate(String username, String password, Callback<Session> sessionCallback) {
+        //Preserve the origin layout viability. Required if authentication fails.
+        previousCredentialsLayoutVisibility = credentialsLayout.getVisibility();
+        previousLoginLayoutVisibility = loginTypeLayout.getVisibility();
+
+        //Hide both to display progress bar.
+        credentialsLayout.setVisibility(View.GONE);
+        loginTypeLayout.setVisibility(View.GONE);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        super.authenticate(username, password, sessionCallback);
     }
 
     public void onShowCredentials(View view) {

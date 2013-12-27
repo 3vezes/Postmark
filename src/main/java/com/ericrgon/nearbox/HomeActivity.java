@@ -24,6 +24,10 @@ public class HomeActivity extends BaseFragmentActivity implements LetterGridFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Display refresh button
+        setRefreshable(true);
+
         setContentView(R.layout.activity_home);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

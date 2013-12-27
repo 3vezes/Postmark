@@ -37,6 +37,8 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     private static final EventBus eventBus = new EventBus();
 
+    private boolean isRefreshable = false;
+
     private static String sessionID = "";
 
     {
@@ -103,6 +105,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_menu,menu);
+        menu.findItem(R.id.menu_refresh).setVisible(isRefreshable);
         return true;
     }
 
@@ -187,5 +190,9 @@ public class BaseFragmentActivity extends FragmentActivity {
         } else {
             logout();
         }
+    }
+
+    protected void setRefreshable(boolean isRefreshable) {
+        this.isRefreshable = isRefreshable;
     }
 }

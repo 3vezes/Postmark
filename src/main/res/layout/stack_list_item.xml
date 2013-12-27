@@ -11,5 +11,7 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp"
-        android:text="Stack Name"/>
+        android:text="Stack Name"
+        android:textSize="@dimen/text_size_medium"
+        android:fontFamily="sans-serif"/>
 </LinearLayout>

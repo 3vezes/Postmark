@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -42,11 +43,19 @@ public class LetterGridFragment extends Fragment{
     private OutboxMailService mailService;
     private Context context;
 
+    private ProgressBar progressBar;
+    private GridView gridView;
+    private View emptyState;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mailService = ((BaseFragmentActivity) activity).getMailService();
         context = activity;
+
+        //Receive events for refresh.
+        setHasOptionsMenu(true);
+
 
         // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
@@ -62,14 +71,35 @@ public class LetterGridFragment extends Fragment{
         // Reset the active callbacks interface to the dummy implementation.
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_refresh:
+                refresh();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_letter_grid, container, false);
 
-        final ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
-        final GridView gridView = (GridView) rootView.findViewById(R.id.letterGrid);
-        final View emptyState = rootView.findViewById(android.R.id.empty);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+        gridView = (GridView) rootView.findViewById(R.id.letterGrid);
+        emptyState = rootView.findViewById(android.R.id.empty);
+
+        refresh();
+
+        return rootView;
+    }
+
+    private void refresh(){
+        //Show progress while we refresh.
+        progressBar.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
+        emptyState.setVisibility(View.GONE);
 
         Bundle arguments = getArguments();
 
@@ -105,7 +135,6 @@ public class LetterGridFragment extends Fragment{
                 }
             });
         }
-        return rootView;
     }
 
     private void setContentVisible(View content, View progress,View emptyView ,boolean isEmpty){

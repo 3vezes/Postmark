@@ -149,6 +149,8 @@ public class LetterDetailFragment extends Fragment {
     public void onPageSelected(PagesAdapter.PageSelectedEvent pageSelectedEvent) {
         Intent pageZoomIntent = new Intent(getActivity(), PageZoomActivity.class);
         pageZoomIntent.putExtra(PageZoomActivity.PAGE, pageSelectedEvent.getPage());
+        //Zero indexed
+        pageZoomIntent.putExtra(PageZoomActivity.PAGE_NUMBER,pageSelectedEvent.getPageNumber() + 1);
         startActivity(pageZoomIntent);
     }
 

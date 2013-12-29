@@ -26,13 +26,19 @@ public class PagesAdapter extends BaseAdapter{
 
     public static class PageSelectedEvent{
         private final Page page;
+        private final int pageNumber;
 
-        public PageSelectedEvent(Page page) {
+        public PageSelectedEvent(Page page, int pageNumber) {
             this.page = page;
+            this.pageNumber = pageNumber;
         }
 
         public Page getPage() {
             return page;
+        }
+
+        public int getPageNumber() {
+            return pageNumber;
         }
     }
 
@@ -72,7 +78,7 @@ public class PagesAdapter extends BaseAdapter{
         pageImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bus.post(new PageSelectedEvent(pagesList.get(position)));
+                bus.post(new PageSelectedEvent(pagesList.get(position), position));
             }
         });
 

@@ -90,16 +90,22 @@ public class LetterGridFragment extends Fragment{
         gridView = (GridView) rootView.findViewById(R.id.letterGrid);
         emptyState = rootView.findViewById(android.R.id.empty);
 
-        refresh();
-
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     private void refresh(){
-        //Show progress while we refresh.
-        progressBar.setVisibility(View.VISIBLE);
-        gridView.setVisibility(View.GONE);
-        emptyState.setVisibility(View.GONE);
+        //Show progress bar if this is the first time loading.
+        if(gridView.getCount() == 0){
+            progressBar.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
+            emptyState.setVisibility(View.GONE);
+        }
 
         Bundle arguments = getArguments();
 

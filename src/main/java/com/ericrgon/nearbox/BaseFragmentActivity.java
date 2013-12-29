@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ericrgon.nearbox.events.UnauthorizedEvent;
 import com.ericrgon.nearbox.model.Session;
@@ -25,6 +26,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class BaseFragmentActivity extends FragmentActivity {
+
+    public static final int GENERATED_PIN = 0;
+    public static final int CONFIRM_PIN = 1;
+    public static final int VALIDATE_PIN = 2;
 
     private static final String CREDENTIALS_PREF_FILE = "CREDENTIALS";
 
@@ -93,6 +98,33 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == VALIDATE_PIN && resultCode == RESULT_OK && data.hasExtra(PinActivity.PIN_DATA)) {
+            //Get the pin number.
+            String pin = data.getStringExtra(PinActivity.PIN_DATA);
+
+            //Authenticate with pin.
+            authenticate(pin, new Callback<Session>(){
+                @Override
+                public void success(Session session, Response response) {
+                    super.success(session, response);
+                    startHomeActivity();
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    super.failure(retrofitError);
+                    //Back to the login screen if the auth failed.
+                    toastInvalidCredentials(retrofitError);
+                    logout();
+                }
+            });
+        }
     }
 
     @Override
@@ -187,12 +219,36 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void unauthorizedEvent(UnauthorizedEvent unauthorizedEvent){
         if(isPasswordSave()){
             //Attempt to re-authenticate the user
+            validatePin();
+
         } else {
             logout();
         }
     }
 
+    protected void validatePin(){
+        Intent pinValidateIntent = new Intent(this, PinActivity.class);
+        startActivityForResult(pinValidateIntent, VALIDATE_PIN);
+    }
+
     protected void setRefreshable(boolean isRefreshable) {
         this.isRefreshable = isRefreshable;
     }
+
+    protected void toastInvalidCredentials(RetrofitError error){
+        if(error.isNetworkError()){
+            Toast.makeText(this, getString(R.string.network_issue), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    protected void startHomeActivity() {
+        Intent letterList = new Intent(BaseFragmentActivity.this, HomeActivity.class);
+        startActivity(letterList);
+        finish();
+
+    }
+
 }

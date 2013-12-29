@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:minHeight="150dp"
     android:background="@drawable/card_background">
-    <com.ericrgon.nearbox.image.GridImageView
+    <com.ericrgon.postmark.image.GridImageView
         android:id="@+id/indexImage"
         android:background="@drawable/loading_image"
         android:layout_width="match_parent"

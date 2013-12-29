@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/pages_list"
-        android:name="com.ericrgon.nearbox.LetterListFragment"
+        android:name="com.ericrgon.postmark.LetterListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

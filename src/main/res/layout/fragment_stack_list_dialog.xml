@@ -7,5 +7,5 @@
         android:id="@+id/stackList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.ericrgon.nearbox.StackListFragment"/>
+        class="com.ericrgon.postmark.StackListFragment"/>
 </FrameLayout>

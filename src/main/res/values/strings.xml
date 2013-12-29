@@ -22,8 +22,9 @@
     <string name="about">About</string>
     <string name="try_without_login">Try without login</string>
     <string name="login">Login</string>
-    <string name="generic_error">An error occurred.</string>
+    <string name="generic_error">An error occurred while performing this operation.</string>
     <string name="refresh">Refresh</string>
+    <string name="network_issue">Cannot access Outbox. Are you connected?</string>
     <string name="empty"/>
 
     <string name="android_support_header">Android Support V4</string>

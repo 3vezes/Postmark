@@ -88,4 +88,12 @@ public class LetterDetailActivity extends BaseFragmentActivity {
         });
     }
 
+    /**
+     * Fired when the user take an action on a message. Examples are adding to the todo stack, etc...
+     * @param event
+     */
+    @Subscribe
+    public void onLetterAction(LetterDetailFragment.LetterEvent event){
+        finish();
+    }
 }

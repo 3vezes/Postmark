@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ericrgon.nearbox.adapter.PagesAdapter;
 import com.ericrgon.nearbox.dialog.StackDialog;
@@ -32,13 +32,36 @@ public class LetterDetailFragment extends Fragment {
 
     private OutboxMailService mailService;
 
-    public LetterDetailFragment() {}
+    private EventBus eventBus;
+
+    private Callback<Letter> letterActionCallback = new Callback<Letter>() {
+        @Override
+        public void success(Letter letter, Response response) {
+            super.success(letter, response);
+            eventBus.post(new LetterEvent());
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError) {
+            super.failure(retrofitError);
+            if(retrofitError.isNetworkError()){
+                Toast.makeText(getActivity(),getString(R.string.network_issue),Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(),R.string.generic_error,Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    public static class LetterEvent {}
+
+    public LetterDetailFragment() {
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mailService = ((BaseFragmentActivity) activity).getMailService();
-        EventBus eventBus = ((BaseFragmentActivity) activity).getEventBus();
+        eventBus = ((BaseFragmentActivity) activity).getEventBus();
         eventBus.register(this);
     }
 
@@ -60,19 +83,7 @@ public class LetterDetailFragment extends Fragment {
         shred.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mailService.shred(letter.getIdentifier(),new Callback<Letter>() {
-                    @Override
-                    public void success(Letter letter, Response response) {
-                        super.success(letter,response);
-                        Log.d("LETTER", "Shred Success");
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        super.failure(retrofitError);
-                        Log.d("LETTER", "Shred Failure");
-                    }
-                });
+                mailService.shred(letter.getIdentifier(), letterActionCallback);
             }
         });
 
@@ -84,7 +95,7 @@ public class LetterDetailFragment extends Fragment {
             public void onClick(View v) {
                 StackDialog stackDialog = new StackDialog();
                 stackDialog.setRetainInstance(true);
-                stackDialog.show(getFragmentManager(),"stack");
+                stackDialog.show(getFragmentManager(), "stack");
             }
         });
 
@@ -92,17 +103,7 @@ public class LetterDetailFragment extends Fragment {
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mailService.todo(letter.getIdentifier(), System.currentTimeMillis(), Todo.EMPTY, new Callback<Letter>() {
-                    @Override
-                    public void success(Letter letter, Response response) {
-                        super.success(letter,response);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        super.failure(retrofitError);
-                    }
-                });
+                mailService.todo(letter.getIdentifier(), System.currentTimeMillis(), Todo.EMPTY, letterActionCallback);
             }
         });
 
@@ -110,22 +111,12 @@ public class LetterDetailFragment extends Fragment {
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mailService.request(letter.getIdentifier(),System.currentTimeMillis(),new Callback<Letter>() {
-                    @Override
-                    public void success(Letter letter, Response response) {
-                        super.success(letter,response);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        super.failure(retrofitError);
-                    }
-                });
+                mailService.request(letter.getIdentifier(), System.currentTimeMillis(), letterActionCallback);
             }
         });
 
         //Hide the request button if the letter has be archived
-        if(letter.isArchived()){
+        if (letter.isArchived()) {
             request.setVisibility(View.GONE);
         }
 
@@ -145,7 +136,7 @@ public class LetterDetailFragment extends Fragment {
                 int scrollY = getScrollY(pagesList);
                 int height = actions.getHeight();
                 int diff = scrollY - previous;
-                current = clamp(current + diff,0,height);
+                current = clamp(current + diff, 0, height);
                 actions.setTranslationY(current);
                 previous = scrollY;
             }
@@ -155,9 +146,9 @@ public class LetterDetailFragment extends Fragment {
     }
 
     @Subscribe
-    public void onPageSelected(PagesAdapter.PageSelectedEvent pageSelectedEvent){
-        Intent pageZoomIntent = new Intent(getActivity(),PageZoomActivity.class);
-        pageZoomIntent.putExtra(PageZoomActivity.PAGE,pageSelectedEvent.getPage());
+    public void onPageSelected(PagesAdapter.PageSelectedEvent pageSelectedEvent) {
+        Intent pageZoomIntent = new Intent(getActivity(), PageZoomActivity.class);
+        pageZoomIntent.putExtra(PageZoomActivity.PAGE, pageSelectedEvent.getPage());
         startActivity(pageZoomIntent);
     }
 

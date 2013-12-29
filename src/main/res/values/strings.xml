@@ -24,6 +24,7 @@
     <string name="login">Login</string>
     <string name="generic_error">An error occurred.</string>
     <string name="refresh">Refresh</string>
+    <string name="empty"/>
 
     <string name="android_support_header">Android Support V4</string>
     <string name="gson_header">Gson</string>
@@ -32,6 +33,7 @@
     <string name="picasso_header">Picasso</string>
     <string name="guava_header">Guava</string>
     <string name="photoview_header">PhotoView</string>
+    <string name="joda_time">Joda Time</string>
 
     <string name="android_support_copyright">Copyright © 2011 The Android Open Source Project</string>
     <string name="gson_copyright">Copyright © 2008–2009 Google Inc.</string>

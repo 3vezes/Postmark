@@ -2,6 +2,9 @@ package com.ericrgon.nearbox.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +27,9 @@ public class Letter implements Serializable{
     @SerializedName("delivered")
     private long deliveredDate;
 
+    @SerializedName("created")
+    private long createdDate;
+
     public List<Page> getPages() {
         return pages;
     }
@@ -38,6 +44,17 @@ public class Letter implements Serializable{
 
     public String getDeliveredDate(){
         return DATE_FORMAT.format(new Date(deliveredDate * 1000));
+    }
+
+    /**
+     * An item is achieved if 30 days has passed
+     * since it was created.
+     * @return
+     */
+    public boolean isArchived(){
+        DateTime now = DateTime.now();
+        DateTime created = new DateTime(createdDate * 1000);
+        return Days.daysBetween(created, now).getDays() >= 30;
     }
 
     @Override

@@ -124,6 +124,11 @@ public class LetterDetailFragment extends Fragment {
             }
         });
 
+        //Hide the request button if the letter has be archived
+        if(letter.isArchived()){
+            request.setVisibility(View.GONE);
+        }
+
         final View actions = rootView.findViewById(R.id.actions);
 
         final ListView pagesList = (ListView) rootView.findViewById(R.id.pages_list);

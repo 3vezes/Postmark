@@ -16,8 +16,8 @@ public class Licenses {
                 License.newInstance(R.string.butterknife_header, R.string.butterknife_copyright, R.string.apache_license),
                 License.newInstance(R.string.picasso_header, R.string.picasso_copyright, R.string.apache_license),
                 License.newInstance(R.string.guava_header, R.string.guava_copyright, R.string.apache_license),
-                License.newInstance(R.string.photoview_header, R.string.photoview_copyright, R.string.apache_license)
+                License.newInstance(R.string.photoview_header, R.string.photoview_copyright, R.string.apache_license),
+                License.newInstance(R.string.joda_time, R.string.empty, R.string.apache_license)
         );
-
     }
 }

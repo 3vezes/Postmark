@@ -31,8 +31,8 @@
 
     <style name="LoginEditText">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/background</item>
-        <item name="android:textColorHint">@color/background</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
     </style>
 
     <style name="LetterActionLayout">

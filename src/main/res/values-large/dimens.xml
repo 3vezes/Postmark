@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="grid_padding" type="dimen">5dp</item>
+    <item name="grid_padding" type="dimen">10dp</item>
     <dimen name="pinWidth">500dp</dimen>
 </resources>

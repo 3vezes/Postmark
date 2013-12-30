@@ -46,6 +46,7 @@ public class LetterGridFragment extends Fragment{
     private ProgressBar progressBar;
     private GridView gridView;
     private View emptyState;
+    private View connectionIssueState;
 
     @Override
     public void onAttach(Activity activity) {
@@ -75,7 +76,7 @@ public class LetterGridFragment extends Fragment{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_refresh:
-                refresh();
+                refresh(true);
                 return true;
         }
 
@@ -89,6 +90,7 @@ public class LetterGridFragment extends Fragment{
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
         gridView = (GridView) rootView.findViewById(R.id.letterGrid);
         emptyState = rootView.findViewById(android.R.id.empty);
+        connectionIssueState = rootView.findViewById(R.id.connectionIssue);
 
         return rootView;
     }
@@ -96,14 +98,18 @@ public class LetterGridFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
+        refresh(false);
     }
 
-    private void refresh(){
+    /**
+     * @param isForced True will clear the content and display the progress dialog.
+     */
+    private void refresh(boolean isForced){
         //Show progress bar if this is the first time loading.
-        if(gridView.getCount() == 0){
+        if(gridView.getCount() == 0 || isForced){
             progressBar.setVisibility(View.VISIBLE);
             gridView.setVisibility(View.GONE);
+            connectionIssueState.setVisibility(View.GONE);
             emptyState.setVisibility(View.GONE);
         }
 
@@ -122,6 +128,7 @@ public class LetterGridFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError retrofitError) {
                     super.failure(retrofitError);
+                    setContentVisible(gridView,progressBar,connectionIssueState,true);
                 }
             });
 
@@ -138,6 +145,7 @@ public class LetterGridFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError retrofitError) {
                     super.failure(retrofitError);
+                    setContentVisible(gridView,progressBar,connectionIssueState,true);
                 }
             });
         }

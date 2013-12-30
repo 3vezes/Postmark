@@ -31,24 +31,48 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:visibility="gone">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/empty_state"/>
+            android:background="@drawable/empty_state" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
+            android:paddingTop="15dp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="@dimen/text_size_large"
             android:text="@string/empty_folder"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/blue" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="@string/empty_sub_text"
             android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/blue" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/connectionIssue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/connection_issue"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/network_issue_brief"
+            android:textSize="@dimen/text_size_large"
             android:textColor="@color/blue"/>
     </LinearLayout>
 </FrameLayout>

@@ -25,6 +25,7 @@
     <string name="generic_error">An error occurred while performing this operation.</string>
     <string name="refresh">Refresh</string>
     <string name="network_issue">Cannot access Outbox. Are you connected?</string>
+    <string name="network_issue_brief">Cannot access Outbox.</string>
     <string name="page">Page</string>
     <string name="empty"/>
 

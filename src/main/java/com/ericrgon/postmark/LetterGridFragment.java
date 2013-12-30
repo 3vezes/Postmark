@@ -44,7 +44,10 @@ public class LetterGridFragment extends Fragment{
     private Context context;
 
     private ProgressBar progressBar;
+
     private GridView gridView;
+    private IndexAdapter indexAdapter;
+
     private View emptyState;
     private View connectionIssueState;
 
@@ -89,6 +92,10 @@ public class LetterGridFragment extends Fragment{
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
         gridView = (GridView) rootView.findViewById(R.id.letterGrid);
+
+        indexAdapter = new IndexAdapter(context);
+        gridView.setAdapter(indexAdapter);
+
         emptyState = rootView.findViewById(android.R.id.empty);
         connectionIssueState = rootView.findViewById(R.id.connectionIssue);
 
@@ -121,8 +128,8 @@ public class LetterGridFragment extends Fragment{
                 @Override
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
-                    gridView.setAdapter(new IndexAdapter(context,letters));
-                    setContentVisible(gridView,progressBar,emptyState,letters.isEmpty());
+                    indexAdapter.update(letters);
+                    setContentVisible(gridView, progressBar, emptyState, letters.isEmpty());
                 }
 
                 @Override
@@ -131,15 +138,14 @@ public class LetterGridFragment extends Fragment{
                     setContentVisible(gridView,progressBar,connectionIssueState,true);
                 }
             });
-
         } else if(arguments.containsKey(FOLDER_ITEM)){
             final Stack stack = (Stack) arguments.getSerializable(FOLDER_ITEM);
             mailService.getStack(stack.getLabel(),new Callback<List<Letter>>() {
                 @Override
                 public void success(List<Letter> letters, Response response) {
                     super.success(letters,response);
-                    gridView.setAdapter(new IndexAdapter(context,letters));
-                    setContentVisible(gridView,progressBar,emptyState,letters.isEmpty());
+                    indexAdapter.update(letters);
+                    setContentVisible(gridView, progressBar, emptyState, letters.isEmpty());
                 }
 
                 @Override

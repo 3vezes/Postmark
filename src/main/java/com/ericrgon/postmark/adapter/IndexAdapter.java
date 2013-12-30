@@ -12,6 +12,7 @@ import com.ericrgon.postmark.LetterGridFragment;
 import com.ericrgon.postmark.R;
 import com.ericrgon.postmark.image.GridImageView;
 import com.ericrgon.postmark.model.Letter;
+import com.google.common.collect.Lists;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public class IndexAdapter extends BaseAdapter {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.callbacks = (LetterGridFragment.Callbacks) context;
+    }
+
+    public IndexAdapter(Context context) {
+        this(context, Lists.<Letter>newArrayList());
     }
 
     @Override
@@ -71,5 +76,11 @@ public class IndexAdapter extends BaseAdapter {
 
 
         return root;
+    }
+
+    public void update(List<Letter> letters){
+        this.letters.clear();
+        this.letters.addAll(letters);
+        notifyDataSetChanged();
     }
 }

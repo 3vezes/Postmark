@@ -18,6 +18,8 @@ import com.ericrgon.postmark.util.SecurityUtil;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import java.net.UnknownHostException;
+
 import javax.crypto.SecretKey;
 
 import retrofit.RequestInterceptor;
@@ -236,7 +238,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     }
 
     protected void toastInvalidCredentials(RetrofitError error){
-        if(error.isNetworkError()){
+        if(error.getCause() instanceof UnknownHostException){
             Toast.makeText(this, getString(R.string.network_issue), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();

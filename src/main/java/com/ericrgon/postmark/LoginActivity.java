@@ -24,6 +24,10 @@ import retrofit.client.Response;
 
 public class LoginActivity extends BaseFragmentActivity {
 
+    public static final int GENERATED_PIN = 0;
+    public static final int CONFIRM_PIN = 1;
+    public static final int VALIDATE_PIN = 2;
+
     public static final String FIRST_PIN = "firstPin";
 
     @InjectView(R.id.username)
@@ -62,7 +66,8 @@ public class LoginActivity extends BaseFragmentActivity {
         Views.inject(this);
 
         if (isPasswordSave()) {
-            validatePin();
+            Intent pinValidateIntent = new Intent(this, PinActivity.class);
+            startActivityForResult(pinValidateIntent, VALIDATE_PIN);
         }
 
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -142,6 +147,12 @@ public class LoginActivity extends BaseFragmentActivity {
                 Intent pinIntent = buildPinIntentWithMessage(R.string.please_set_your_pin);
                 startActivityForResult(pinIntent,GENERATED_PIN);
             }
+        } else if (requestCode == VALIDATE_PIN && resultCode == RESULT_OK && data.hasExtra(PinActivity.PIN_DATA)) {
+            //Get the pin number.
+            String pin = data.getStringExtra(PinActivity.PIN_DATA);
+
+            //Authenticate with pin.
+            authenticate(pin, loginCallback);
         }
     }
 
@@ -159,6 +170,13 @@ public class LoginActivity extends BaseFragmentActivity {
 
     public void login(View view) {
         authenticate(username.getText().toString(), password.getText().toString(), loginCallback);
+    }
+
+    private void startHomeActivity() {
+        Intent letterList = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(letterList);
+        finish();
+
     }
 
     public void onDemoLogin(View view) {

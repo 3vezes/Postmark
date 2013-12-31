@@ -29,10 +29,6 @@ import retrofit.client.Response;
 
 public class BaseFragmentActivity extends FragmentActivity {
 
-    public static final int GENERATED_PIN = 0;
-    public static final int CONFIRM_PIN = 1;
-    public static final int VALIDATE_PIN = 2;
-
     private static final String CREDENTIALS_PREF_FILE = "CREDENTIALS";
 
     private static final String SALT_PREF = "salt";
@@ -72,7 +68,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         SecretKey key = generateKey(pin);
         String username = decrypt(key,ENCRYPTED_USER_PREF);
         String password = decrypt(key,ENCRYPTED_PASSWORD_PREF);
-        authenticate(username,password,sessionCallback);
+        authenticate(username, password, sessionCallback);
     }
 
     protected void authenticate(String username,String password, final Callback<Session> sessionCallback){
@@ -100,33 +96,6 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == VALIDATE_PIN && resultCode == RESULT_OK && data.hasExtra(PinActivity.PIN_DATA)) {
-            //Get the pin number.
-            String pin = data.getStringExtra(PinActivity.PIN_DATA);
-
-            //Authenticate with pin.
-            authenticate(pin, new Callback<Session>(){
-                @Override
-                public void success(Session session, Response response) {
-                    super.success(session, response);
-                    startHomeActivity();
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    super.failure(retrofitError);
-                    //Back to the login screen if the auth failed.
-                    toastInvalidCredentials(retrofitError);
-                    logout();
-                }
-            });
-        }
     }
 
     @Override
@@ -166,9 +135,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         editor.clear().apply();
 
         //Launch login.
-        Intent login = new Intent(this,LoginActivity.class);
-        startActivity(login);
-        finish();
+        startLoginActivity();
     }
 
     private byte[] getSalt(){
@@ -204,7 +171,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     protected String decrypt(SecretKey key, String destinationPreference){
         SharedPreferences preferences = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE);
-        String encryptedValue = preferences.getString(destinationPreference,"");
+        String encryptedValue = preferences.getString(destinationPreference, "");
         return SecurityUtil.decrypt(key, Base64.decode(encryptedValue,Base64.DEFAULT));
     }
 
@@ -221,16 +188,10 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void unauthorizedEvent(UnauthorizedEvent unauthorizedEvent){
         if(isPasswordSave()){
             //Attempt to re-authenticate the user
-            validatePin();
-
+            startLoginActivity();
         } else {
             logout();
         }
-    }
-
-    protected void validatePin(){
-        Intent pinValidateIntent = new Intent(this, PinActivity.class);
-        startActivityForResult(pinValidateIntent, VALIDATE_PIN);
     }
 
     protected void setRefreshable(boolean isRefreshable) {
@@ -243,14 +204,11 @@ public class BaseFragmentActivity extends FragmentActivity {
         } else {
             Toast.makeText(this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();
         }
-
     }
 
-    protected void startHomeActivity() {
-        Intent letterList = new Intent(BaseFragmentActivity.this, HomeActivity.class);
-        startActivity(letterList);
+    private void startLoginActivity() {
+        Intent login = new Intent(this,LoginActivity.class);
+        startActivity(login);
         finish();
-
     }
-
 }

@@ -29,6 +29,8 @@ public class LoginActivity extends BaseFragmentActivity {
     public static final int VALIDATE_PIN = 2;
 
     public static final String FIRST_PIN = "firstPin";
+    public static final String FAILED_AUTH_COUNT = "failedAuthCount";
+    private static final int PIN_RETRY_COUNT = 3;
 
     @InjectView(R.id.username)
     EditText username;
@@ -58,6 +60,7 @@ public class LoginActivity extends BaseFragmentActivity {
 
     private int previousCredentialsLayoutVisibility;
     private int previousLoginLayoutVisibility;
+    private int failedAuthCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,17 @@ public class LoginActivity extends BaseFragmentActivity {
                 loginTypeLayout.setVisibility(previousLoginLayoutVisibility);
 
                 progressBar.setVisibility(View.GONE);
+
+                if(isPasswordSave() && failedAuthCount >= PIN_RETRY_COUNT){
+                    Toast.makeText(LoginActivity.this, getString(R.string.too_many_incorrect_attempts), Toast.LENGTH_LONG).show();
+                    logout();
+                } else if(isPasswordSave()) {
+                    //Display pin again.
+                    Intent pinValidateIntent = new Intent(LoginActivity.this, PinActivity.class);
+                    pinValidateIntent.putExtra(FAILED_AUTH_COUNT,failedAuthCount);
+                    startActivityForResult(pinValidateIntent, VALIDATE_PIN);
+
+                }
             }
         };
     }
@@ -150,6 +164,8 @@ public class LoginActivity extends BaseFragmentActivity {
         } else if (requestCode == VALIDATE_PIN && resultCode == RESULT_OK && data.hasExtra(PinActivity.PIN_DATA)) {
             //Get the pin number.
             String pin = data.getStringExtra(PinActivity.PIN_DATA);
+
+            failedAuthCount = data.getIntExtra(FAILED_AUTH_COUNT,0) + 1;
 
             //Authenticate with pin.
             authenticate(pin, loginCallback);

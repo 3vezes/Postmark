@@ -142,7 +142,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void logout() {
+    protected void logout() {
         //Nuke the user preferences.
         SharedPreferences.Editor editor = getSharedPreferences(CREDENTIALS_PREF_FILE, MODE_PRIVATE).edit();
         editor.clear().apply();
@@ -215,7 +215,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         if(error.getCause() instanceof UnknownHostException){
             Toast.makeText(this, getString(R.string.network_issue), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getString(R.string.invalid_login_credentials), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.invalid_login_credentials), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -57,5 +57,6 @@
         See the License for the specific language governing permissions and\n
         limitations under the License.\n
     </string>
+    <string name="too_many_incorrect_attempts">Too many incorrect pin attempts.</string>
 
 </resources>

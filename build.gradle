@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.guava:guava:15.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
     compile 'joda-time:joda-time:2.3'
+    compile files("libs/libGoogleAnalyticsServices.jar")
 }

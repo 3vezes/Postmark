@@ -15,6 +15,7 @@ import com.ericrgon.postmark.model.Session;
 import com.ericrgon.postmark.rest.Callback;
 import com.ericrgon.postmark.rest.OutboxMailService;
 import com.ericrgon.postmark.util.SecurityUtil;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
@@ -90,6 +91,18 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     public EventBus getEventBus() {
         return eventBus;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

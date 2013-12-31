@@ -46,13 +46,21 @@ public class PinActivity extends BaseFragmentActivity {
         pinMessage.setText(getIntent().getIntExtra(PIN_MESSAGE,R.string.please_enter_your_pin));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        current = 0;
+    }
+
     public void onDigitClicked(View view) {
         TextView digit = (TextView) view;
 
         if(digit.getId() == R.id.back){
             //User pressed delete.
             setDigit(current,"");
-            current--;
+            if(current > 0){
+                current--;
+            }
         } else {
             pin[current] = digit.getText().charAt(0);
             current++;

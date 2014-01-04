@@ -51,6 +51,12 @@
             android:id="@+id/requested"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Requested" />
+            android:text="@string/Requested" />
+        <TextView
+            style="@style/NavDrawerItem"
+            android:id="@+id/tossed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Tossed"/>
     </LinearLayout>
 </ScrollView>

@@ -58,5 +58,7 @@
         limitations under the License.\n
     </string>
     <string name="too_many_incorrect_attempts">Too many incorrect pin attempts.</string>
+    <string name="Requested">Requested</string>
+    <string name="Tossed">Tossed</string>
 
 </resources>

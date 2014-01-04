@@ -86,6 +86,14 @@ public class DrawerFragment extends Fragment {
             }
         });
 
+        View tossed = rootView.findViewById(R.id.tossed);
+        tossed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventBus.post(new StatusSelectedEvent(OutboxMailService.Status.TOSSED));
+            }
+        });
+
         final View progressBar = rootView.findViewById(R.id.progress);
 
         final LinearLayout folderLayout = (LinearLayout) rootView.findViewById(R.id.folders);

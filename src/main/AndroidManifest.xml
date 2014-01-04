@@ -39,6 +39,7 @@
         <activity android:name="com.ericrgon.postmark.PinActivity"/>
         <activity android:name="com.ericrgon.postmark.PageZoomActivity"/>
         <activity android:name="com.ericrgon.postmark.LicenseListActivity"/>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="0384d97eeece7334bf2a84f24646b71ad49b59c9"/>
     </application>
 
 </manifest>

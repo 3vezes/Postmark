@@ -2,9 +2,12 @@ package com.ericrgon.postmark;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -13,13 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ericrgon.postmark.adapter.PagesAdapter;
+import com.ericrgon.postmark.dialog.ShareLetterProgressDialog;
 import com.ericrgon.postmark.dialog.StackDialog;
 import com.ericrgon.postmark.model.Letter;
 import com.ericrgon.postmark.model.Todo;
 import com.ericrgon.postmark.rest.Callback;
 import com.ericrgon.postmark.rest.OutboxMailService;
+import com.ericrgon.postmark.task.ShareAsyncTask;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,12 +34,15 @@ import retrofit.client.Response;
 public class LetterDetailFragment extends Fragment {
 
     public static final String LETTER_ID = "letter";
+    private static final String SHARE = "share";
 
     private Letter letter;
 
     private OutboxMailService mailService;
 
     private EventBus eventBus;
+
+    private ShareAsyncTask shareAsyncTask;
 
     private Callback<Letter> letterActionCallback = new Callback<Letter>() {
         @Override
@@ -53,9 +63,20 @@ public class LetterDetailFragment extends Fragment {
     };
 
     public static class LetterEvent {}
+    public static class ShareEvent{
+        private final ArrayList<Uri> images;
 
-    public LetterDetailFragment() {
+        public ShareEvent(ArrayList<Uri> images) {
+            this.images = images;
+        }
+
+        public ArrayList<Uri> getImages() {
+            return images;
+        }
     }
+
+
+    public LetterDetailFragment() {}
 
     @Override
     public void onAttach(Activity activity) {
@@ -63,6 +84,7 @@ public class LetterDetailFragment extends Fragment {
         mailService = ((BaseFragmentActivity) activity).getMailService();
         eventBus = ((BaseFragmentActivity) activity).getEventBus();
         eventBus.register(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -73,6 +95,32 @@ public class LetterDetailFragment extends Fragment {
             letter = (Letter) getArguments().getSerializable(LETTER_ID);
             getActivity().getActionBar().setTitle(letter.getDeliveredDate());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_share:
+                shareLetter();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareLetter() {
+        DialogFragment shareLetterProgressDialog = new ShareLetterProgressDialog();
+        shareLetterProgressDialog.setRetainInstance(true);
+        shareLetterProgressDialog.show(getFragmentManager(), SHARE);
+        shareAsyncTask = new ShareAsyncTask(getActivity()){
+            @Override
+            protected void onPostExecute(ArrayList<Uri> cacheURIs) {
+                super.onPostExecute(cacheURIs);
+                eventBus.post(new ShareEvent(cacheURIs));
+                }
+        };
+
+        shareAsyncTask.execute(letter);
     }
 
     @Override
@@ -90,7 +138,6 @@ public class LetterDetailFragment extends Fragment {
 
         View move = rootView.findViewById(R.id.move);
         move.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 StackDialog stackDialog = new StackDialog();
@@ -152,6 +199,30 @@ public class LetterDetailFragment extends Fragment {
         //Zero indexed
         pageZoomIntent.putExtra(PageZoomActivity.PAGE_NUMBER,pageSelectedEvent.getPageNumber() + 1);
         startActivity(pageZoomIntent);
+    }
+
+    @Subscribe
+    public void onDimissEvent(ShareLetterProgressDialog.DismissedEvent dismissedEvent){
+        //Kill the remaining downloads if the user dismissed the dialog.
+        shareAsyncTask.cancel(true);
+    }
+
+    @Subscribe
+    public void shareEvent(ShareEvent shareEvent){
+        ArrayList<Uri> cacheURIs = shareEvent.getImages();
+        DialogFragment stackDialog = (ShareLetterProgressDialog) getFragmentManager().findFragmentByTag(SHARE);
+        if(stackDialog != null){
+            stackDialog.dismiss();
+        }
+
+        //Build Share Intent.
+        Intent shareLetter = new Intent();
+        shareLetter.setAction(Intent.ACTION_SEND_MULTIPLE);
+        shareLetter.putParcelableArrayListExtra(Intent.EXTRA_STREAM,cacheURIs);
+        shareLetter.setType("image/*");
+
+        //Launch intent.
+        startActivity(Intent.createChooser(shareLetter, getString(R.string.share_letter_to)));
     }
 
     public int getScrollY(ListView listView) {

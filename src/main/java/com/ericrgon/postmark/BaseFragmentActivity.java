@@ -42,6 +42,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     private static final EventBus eventBus = new EventBus();
 
     private boolean isRefreshable = false;
+    private boolean isShareable = false;
 
     private static String sessionID = "";
 
@@ -122,6 +123,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_menu,menu);
         menu.findItem(R.id.menu_refresh).setVisible(isRefreshable);
+        menu.findItem(R.id.menu_share).setVisible(isShareable);
         return true;
     }
 
@@ -209,6 +211,10 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     protected void setRefreshable(boolean isRefreshable) {
         this.isRefreshable = isRefreshable;
+    }
+
+    protected void setShareable(boolean isShareable) {
+        this.isShareable = isShareable;
     }
 
     protected void toastInvalidCredentials(RetrofitError error){

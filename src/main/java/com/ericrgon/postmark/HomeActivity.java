@@ -12,6 +12,7 @@ import com.ericrgon.postmark.image.ActionBarIconTarget;
 import com.ericrgon.postmark.model.Letter;
 import com.ericrgon.postmark.model.Stack;
 import com.ericrgon.postmark.rest.OutboxMailService;
+import com.ericrgon.postmark.util.CacheUtil;
 import com.google.common.eventbus.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -69,6 +70,14 @@ public class HomeActivity extends BaseFragmentActivity implements LetterGridFrag
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Delete files used by the sharing intent.
+        CacheUtil.clearLetterCacheDir(this);
     }
 
     @Override

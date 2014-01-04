@@ -1,6 +1,7 @@
 package com.ericrgon.postmark;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -22,12 +23,15 @@ public class StackListFragment extends ListFragment {
 
     private OutboxMailService mailService;
 
+    private Context context;
+
     public StackListFragment() {}
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mailService = ((BaseFragmentActivity) activity).getMailService();
+        context = activity;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class StackListFragment extends ListFragment {
             @Override
             public void success(List<Stack> stacks, Response response) {
                 super.success(stacks,response);
-                setListAdapter(new StackAdapter(getActivity(),stacks));
+                setListAdapter(new StackAdapter(context,stacks));
             }
 
             @Override

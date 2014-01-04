@@ -26,7 +26,7 @@ public interface OutboxMailService {
     public void authenticate(@Field("username") String username,@Field("password") String password, Callback<Session> sessionCallback);
 
     public enum Status {UNSORTED("unsorted", "Inbox", R.drawable.ic_launcher),TODO("todo", "To-Do", R.drawable.todo),
-        REQUESTED("requested","Requested",R.drawable.request),TOSSED("shredded","Tossed",R.drawable.ic_launcher);
+        REQUESTED("requested","Requested",R.drawable.request),TOSSED("shredded","Tossed",R.drawable.tossed);
         private final String status;
         private final String title;
         private final int drawable;

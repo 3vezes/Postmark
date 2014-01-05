@@ -60,5 +60,8 @@
     <string name="too_many_incorrect_attempts">Too many incorrect pin attempts.</string>
     <string name="Requested">Requested</string>
     <string name="Tossed">Tossed</string>
+    <string name="share">Share</string>
+    <string name="share_letter_to">Share Letter to…</string>
+    <string name="downloading">Downloading…</string>
 
 </resources>

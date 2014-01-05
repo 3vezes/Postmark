@@ -31,6 +31,7 @@ public class LetterDetailActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letter_detail);
+        setShareable(true);
 
         mailService = getMailService();
         letter = (Letter) getIntent().getSerializableExtra(LetterDetailFragment.LETTER_ID);
